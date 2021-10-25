@@ -21,8 +21,13 @@ const LoginForm: FC<LoginFormProps> = ({
     <form onSubmit={onFormSubmit}>
       <Box sx={{ display: "grid", gap: 3 }}>
         <LoginFormHeader title="Login" />
-        <TextField {...usernameProps} label="Username" />
-        <TextField {...passwordProps} type="password" label="Password" />
+        <TextField inputProps={{ ...usernameProps }} label="Username" />
+        {/* TOOD: pass {...usernameProps} to inputProps */}
+        <TextField
+          inputProps={{ ...passwordProps }}
+          type="password"
+          label="Password"
+        />
         <Button
           type="submit"
           variant="contained"

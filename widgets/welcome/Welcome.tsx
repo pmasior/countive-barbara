@@ -4,6 +4,7 @@ import utilStyles from "../../styles/utils.module.css";
 import Grid from "@mui/material/Grid";
 import ActionCard from "./ActionCard";
 import Typography from "@mui/material/Typography";
+import AppLogo from "../../components/AppLogo/AppLogo";
 
 const Welcome: FC<{}> = () => {
   return (
@@ -11,7 +12,7 @@ const Welcome: FC<{}> = () => {
       <Grid container spacing={2} rowSpacing={4}>
         <Grid item xs={12}>
           <Typography component="h1" variant="h2" textAlign="center">
-            Welcome to <span className={utilStyles.appName}>countive</span>
+            Welcome to <AppLogo />
           </Typography>
         </Grid>
         <Grid item xs={12}>

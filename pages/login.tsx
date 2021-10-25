@@ -2,8 +2,8 @@ import React from "react";
 import { NextPage } from "next";
 import Grid from "@mui/material/Grid";
 
-import LoginFormContainer from "../components/login/LoginFormContainer";
-import FullPage from "../components/common/FullPage";
+import LoginFormContainer from "../widgets/login/LoginFormContainer";
+import FullPage from "../components/FullPage/FullPage";
 
 const Login: NextPage = () => {
   return (
