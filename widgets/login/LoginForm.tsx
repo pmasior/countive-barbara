@@ -1,6 +1,6 @@
 import React, { FC, FormEvent } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
-import Box from "@mui/system/Box";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import LoginFormHeader from "./LoginFormHeader";

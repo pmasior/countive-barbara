@@ -12,7 +12,7 @@ const Welcome: FC<{}> = () => {
       <Grid container spacing={2} rowSpacing={4}>
         <Grid item xs={12}>
           <Typography component="h1" variant="h2" textAlign="center">
-            Welcome to <AppLogo />
+            Welcome to <AppLogo variant="h2" />
           </Typography>
         </Grid>
         <Grid item xs={12}>
