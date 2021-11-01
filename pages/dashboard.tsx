@@ -1,11 +1,14 @@
 import React from "react";
 import Head from "next/head";
 import { NextPage } from "next";
+import { useSession } from "next-auth/react";
 
 import AppNavigation from "../widgets/appNavigation/AppNavigation";
 import GridOfSubcategoryCard from "../widgets/dashboardCards/GridOfSubcategoryCard";
 
 const Dashboard: NextPage = () => {
+  const { data: sessionData } = useSession();
+
   return (
     <>
       <Head>
@@ -21,6 +24,8 @@ const Dashboard: NextPage = () => {
           { text: "Pożyczone", icon: "front_hand" },
         ]}
       >
+        {/* TODO: remove below */}
+        <p>{JSON.stringify(sessionData)}</p>
         <GridOfSubcategoryCard
           subcategories={[
             {
