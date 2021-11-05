@@ -3,8 +3,8 @@ import Head from "next/head";
 import { NextPage } from "next";
 import Grid from "@mui/material/Grid";
 
-import LoginFormContainer from "../widgets/login/LoginFormContainer";
-import FullPage from "../components/FullPage/FullPage";
+import FullPage from "components/FullPage/FullPage";
+import LoginFormContainer from "widgets/login/LoginFormContainer";
 
 const Login: NextPage = () => {
   return (

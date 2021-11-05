@@ -3,8 +3,8 @@ import Head from "next/head";
 import { NextPage } from "next";
 import { useSession } from "next-auth/react";
 
-import AppNavigation from "../widgets/appNavigation/AppNavigation";
-import GridOfSubcategoryCard from "../widgets/dashboardCards/GridOfSubcategoryCard";
+import AppNavigation from "widgets/appNavigation/AppNavigation";
+import GridOfSubcategoryCard from "widgets/dashboardCards/GridOfSubcategoryCard";
 
 const Dashboard: NextPage = () => {
   const { data: sessionData } = useSession();

@@ -3,8 +3,8 @@ import Head from "next/head";
 import { NextPage } from "next";
 import Grid from "@mui/material/Grid";
 
-import Welcome from "../widgets/welcome/Welcome";
-import FullPage from "../components/FullPage/FullPage";
+import FullPage from "components/FullPage/FullPage";
+import Welcome from "widgets/welcome/Welcome";
 
 const Index: NextPage = () => {
   return (

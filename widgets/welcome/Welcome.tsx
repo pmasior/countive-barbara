@@ -1,10 +1,9 @@
 import React, { FC } from "react";
-
-import utilStyles from "../../styles/utils.module.css";
 import Grid from "@mui/material/Grid";
-import ActionCard from "./ActionCard";
 import Typography from "@mui/material/Typography";
-import AppLogo from "../../components/AppLogo/AppLogo";
+
+import AppLogo from "components/AppLogo/AppLogo";
+import ActionCard from "./ActionCard";
 
 const Welcome: FC<{}> = () => {
   return (

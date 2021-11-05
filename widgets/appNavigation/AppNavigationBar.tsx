@@ -6,7 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Button from "@mui/material/Button";
 
-import AppLogo from "../../components/AppLogo/AppLogo";
+import AppLogo from "components/AppLogo/AppLogo";
 
 const AppNavigationBar: FC<{
   handleDrawerToggleOnClick: () => void;
