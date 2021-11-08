@@ -2,19 +2,21 @@ import NextAuth from "next-auth";
 import CredentialsProvider, {
   CredentialInput,
 } from "next-auth/providers/credentials";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
-interface CredentialsInputs {
-  username: CredentialInput;
-  password: CredentialInput;
-}
+import { findUserByEmail } from "lib/databaseOperations/user";
+import { comparePasswords } from "lib/auth/hashPassword";
+import prisma from "prisma/prismaClient";
 
-// const prismaClient;
+type Credentials = Record<"email" | "password", CredentialInput>;
+type CredentialsInputs = Record<"email" | "password", string>;
 
 const nextAuthOptions = {
+  adapter: PrismaAdapter(prisma),
   providers: [
-    CredentialsProvider<{}>({
+    CredentialsProvider<Credentials>({
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "Username" },
+        email: { label: "E-mail", type: "text", placeholder: "E-mail" },
         password: {
           label: "Password",
           type: "password",
@@ -22,29 +24,46 @@ const nextAuthOptions = {
         },
       },
       async authorize(credentials, req) {
-        // TODO: change to database query
+        breakLoginIfInvalid(credentials);
+        const { email, password } = credentials as CredentialsInputs;
+        const user = await findUserByEmail(email);
+        const passwordFromDatabase = user?.password;
         if (
-          credentials &&
-          (credentials as CredentialsInputs).username === "pawel" &&
-          (credentials as CredentialsInputs).password === " "
+          passwordFromDatabase &&
+          comparePasswords(password, passwordFromDatabase)
         ) {
-          return {
-            id: 1,
-            name: "Paweł",
-            email: "pawel@example.com",
-          };
+          return user;
         }
 
-        return null;
+        throw new Error("Invalid credentials");
       },
     }),
   ],
-  // TODO: move secret to .env?
-  secret: "50edc142845b02ae4dfbd0d5f833a87c8sm4a0864c32d3fe54d63ff195a0af94",
+  secret: process.env.SECRET,
+  session: {
+    jwt: true,
+  },
   jwt: {
     encryption: true,
-    secret: "bt678ny96r6v9n80m78ntb687NTiwhbfd9IhuLqmpwo",
+    secret: process.env.JWT_ENCRYPTION_SECRET,
+  },
+  pages: {
+    signIn: "/login",
   },
 };
 
 export default NextAuth(nextAuthOptions);
+
+const breakLoginIfInvalid = (body: CredentialsInputs | undefined) => {
+  const isCredentialsUndefined = () => !body;
+  const isMissingParams = () => !body?.email || !body.password;
+
+  if (isCredentialsUndefined()) {
+    console.log(JSON.stringify(!!body));
+    throw new Error("Missing email and password");
+  } else if (isMissingParams()) {
+    console.log("err");
+    throw new Error("Missing email or password");
+  }
+  return true;
+};

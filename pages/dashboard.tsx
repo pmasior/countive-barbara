@@ -1,13 +1,30 @@
 import React from "react";
 import Head from "next/head";
-import { NextPage } from "next";
+import {
+  GetServerSideProps,
+  InferGetServerSidePropsType,
+  NextPage,
+} from "next";
 import { useSession } from "next-auth/react";
 
+import { getCategory } from "lib/databaseOperations/category";
+import { getEntityForUserInSSR } from "lib/auth/getEntityForUserInSSR";
 import AppNavigation from "widgets/appNavigation/AppNavigation";
 import GridOfSubcategoryCard from "widgets/dashboardCards/GridOfSubcategoryCard";
 
-const Dashboard: NextPage = () => {
-  const { data: sessionData } = useSession();
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const categories = await getEntityForUserInSSR(context, getCategory);
+  return {
+    props: { categories },
+  };
+};
+
+const Dashboard: NextPage = ({
+  categories,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const { data: sessionData } = useSession({
+    required: true,
+  });
 
   return (
     <>
@@ -24,6 +41,7 @@ const Dashboard: NextPage = () => {
           { text: "Pożyczone", icon: "front_hand" },
         ]}
       >
+        {JSON.stringify(categories, null, 2)}
         {/* TODO: remove below */}
         <p>{JSON.stringify(sessionData)}</p>
         <GridOfSubcategoryCard

@@ -3,19 +3,19 @@ import Head from "next/head";
 import { NextPage } from "next";
 
 import FullPage from "components/FullPage/FullPage";
-import LoginFormContainer from "widgets/authForms/LoginFormContainer";
+import RegisterFormContainer from "widgets/authForms/RegisterFormContainer";
 
-const Login: NextPage = () => {
+const Register: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Login to countive</title>
+        <title>Register to countive</title>
       </Head>
       <FullPage gridItemParams={{ md: 4 }}>
-        <LoginFormContainer />
+        <RegisterFormContainer />
       </FullPage>
     </>
   );
 };
 
-export default Login;
+export default Register;
