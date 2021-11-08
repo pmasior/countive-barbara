@@ -3,13 +3,10 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 
 import AppNavigationBar from "./AppNavigationBar";
-import AppNavigationDrawer, { DrawerElement } from "./AppNavigationDrawer";
+import AppNavigationDrawer from "./AppNavigationDrawer";
 
 // TODO: change name because its include main children
-const AppNavigation: FC<{
-  children: ReactNode;
-  drawerElements: DrawerElement[];
-}> = ({ children, drawerElements }) => {
+const AppNavigation: FC<{ children: ReactNode }> = ({ children }) => {
   const [openDrawerOnMobile, setOpenDrawerOnMobile] = useState<boolean>(false);
 
   const handleDrawerToggleOnClick = () => {
@@ -20,7 +17,6 @@ const AppNavigation: FC<{
     <>
       <AppNavigationBar handleDrawerToggleOnClick={handleDrawerToggleOnClick} />
       <AppNavigationDrawer
-        elements={[...drawerElements]}
         openDrawerOnMobile={openDrawerOnMobile}
         handleDrawerToggleOnClick={handleDrawerToggleOnClick}
       />

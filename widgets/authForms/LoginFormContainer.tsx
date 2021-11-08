@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 
 import Form from "./Form";
+import { APP_URL } from "shared/constants/urls";
 
 export type FormFields = Record<"email" | "password", string>;
 
@@ -20,7 +21,7 @@ const LoginFormContainer: FC<{}> = () => {
     if (signInResult?.["error"]) {
       setAlertText(signInResult["error"]);
     } else if (signInResult?.["ok"]) {
-      router.push("/dashboard");
+      router.push(APP_URL);
     }
   };
 

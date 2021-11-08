@@ -6,28 +6,37 @@ import {
   NextPage,
 } from "next";
 import { useSession } from "next-auth/react";
+import { SWRConfig } from "swr";
 
 import { getCategory } from "lib/databaseOperations/category";
+import { getIcon } from "lib/databaseOperations/icon";
 import { getEntityForUserInSSR } from "lib/auth/getEntityForUserInSSR";
+import { API_CATEGORY_URL, API_ICON_URL } from "shared/constants/urls";
 import AppNavigation from "widgets/appNavigation/AppNavigation";
 import GridOfSubcategoryCard from "widgets/dashboardCards/GridOfSubcategoryCard";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const categories = await getEntityForUserInSSR(context, getCategory);
+  const icons = await getIcon();
   return {
-    props: { categories },
+    props: {
+      fallback: {
+        [API_CATEGORY_URL]: categories,
+        [API_ICON_URL]: icons,
+      },
+    },
   };
 };
 
 const Dashboard: NextPage = ({
-  categories,
+  fallback,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { data: sessionData } = useSession({
     required: true,
   });
 
   return (
-    <>
+    <SWRConfig value={{ fallback }}>
       <Head>
         {/* TODO: is it good place for add material icons? */}
         <link
@@ -35,16 +44,11 @@ const Dashboard: NextPage = ({
           rel="stylesheet"
         />
       </Head>
-      <AppNavigation
-        drawerElements={[
-          { text: "Rachunki", icon: "payments" },
-          { text: "Pożyczone", icon: "front_hand" },
-        ]}
-      >
-        {JSON.stringify(categories, null, 2)}
+      <AppNavigation>
         {/* TODO: remove below */}
         <p>{JSON.stringify(sessionData)}</p>
         <GridOfSubcategoryCard
+          // TODO: move below to GridOfSubcategoryCard and fetch data using useFetchSWR
           subcategories={[
             {
               name: "Spożywcze",
@@ -77,7 +81,7 @@ const Dashboard: NextPage = ({
           ]}
         />
       </AppNavigation>
-    </>
+    </SWRConfig>
   );
 };
 

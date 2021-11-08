@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 
 import AppLogo from "components/AppLogo/AppLogo";
 import ActionCard from "./ActionCard";
+import { LOGIN_URL, REGISTER_URL } from "shared/constants/urls";
 
 const Welcome: FC<{}> = () => {
   return (
@@ -23,14 +24,14 @@ const Welcome: FC<{}> = () => {
           <ActionCard
             title="Login"
             description="Get back to us"
-            href="/login"
+            href={LOGIN_URL}
           />
         </Grid>
         <Grid item xs={6}>
           <ActionCard
             title="Register"
             description="Check our application"
-            href="/register"
+            href={REGISTER_URL}
           />
         </Grid>
       </Grid>

@@ -3,6 +3,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 
 import Form from "./Form";
+import { API_REGISTER_URL } from "shared/constants/urls";
 import { useFetchPOST } from "utils/useFetchPost";
 
 export type FormFields = Record<"email" | "password", string>;
@@ -11,7 +12,7 @@ const RegisterFormContainer: FC<{}> = () => {
   const router = useRouter();
   const [alertText, setAlertText] = useState<string>("");
   const { register, handleSubmit } = useForm<FormFields>();
-  const { fetchPOST, loading } = useFetchPOST("/api/auth/register");
+  const { fetchPOST, loading } = useFetchPOST(API_REGISTER_URL);
 
   const onSubmit: SubmitHandler<FormFields> = async (data, e) => {
     const { error, json, status, text } = await fetchPOST(data);

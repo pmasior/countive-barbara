@@ -1,30 +1,53 @@
 import React, { FC } from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
+import Link from "@mui/material/Link";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import Icon from "@mui/material/Icon";
+import IconDisplayer from "@mui/material/Icon";
+import { Category } from ".prisma/client";
+import { Icon } from ".prisma/client";
 
-export type DrawerElement = {
-  text: string;
-  icon: string;
-};
+import { API_CATEGORY_URL, API_ICON_URL, APP_URL } from "shared/constants/urls";
+import { useFetchSWR } from "utils/useFetchSWR";
+
+export type DrawerElement = Record<"text" | "icon" | "href", string>;
 
 const AppNavigationDrawer: FC<{
-  elements: DrawerElement[];
   openDrawerOnMobile: boolean;
   handleDrawerToggleOnClick: () => void;
-}> = ({ elements, openDrawerOnMobile, handleDrawerToggleOnClick }) => {
+}> = ({ openDrawerOnMobile, handleDrawerToggleOnClick }) => {
+  const { data: categories } = useFetchSWR<Category[]>(API_CATEGORY_URL);
+  const { data: icons } = useFetchSWR<Icon[]>(API_ICON_URL);
+
+  const createDrawerElements = () => {
+    if (categories && icons) {
+      return categories.map((c) => ({
+        text: c.name,
+        icon: icons.find((i) => i.id === c.iconId)?.name || "",
+        href: `${APP_URL}/${c.name.toLowerCase()}`,
+      }));
+    }
+    return [];
+  };
+
+  const drawerElements: DrawerElement[] = createDrawerElements();
+
   return (
     <Box component="nav">
       <Drawer open={openDrawerOnMobile} onClose={handleDrawerToggleOnClick}>
         <List>
-          {elements.map((e) => (
-            <ListItem button key={`appNawigationDrawerElement_${e.text}`}>
+          {drawerElements.map((e) => (
+            <ListItem
+              button
+              component={Link}
+              key={`appNavigationDrawerElement_${e.text}`}
+              href={e.href}
+            >
               <ListItemIcon>
-                <Icon>{e.icon}</Icon>
+                <IconDisplayer>{e.icon}</IconDisplayer>
               </ListItemIcon>
               <ListItemText>{e.text}</ListItemText>
             </ListItem>
