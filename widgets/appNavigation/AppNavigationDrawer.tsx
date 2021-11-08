@@ -22,7 +22,7 @@ const AppNavigationDrawer: FC<{
       <Drawer open={openDrawerOnMobile} onClose={handleDrawerToggleOnClick}>
         <List>
           {elements.map((e) => (
-            <ListItem button>
+            <ListItem button key={`appNawigationDrawerElement_${e.text}`}>
               <ListItemIcon>
                 <Icon>{e.icon}</Icon>
               </ListItemIcon>

@@ -10,7 +10,7 @@ const GridOfSubcategoryCard: FC<{ subcategories: SubcategorySummary[] }> = ({
   return (
     <Grid container spacing={1} xs={4}>
       {subcategories.map((s) => (
-        <Grid item xs={4}>
+        <Grid item xs={4} key={`subcategoryCard_${s.name}`}>
           <SubcategoryCard {...s} />
         </Grid>
       ))}
