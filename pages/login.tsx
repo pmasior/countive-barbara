@@ -2,8 +2,7 @@ import React from "react";
 import Head from "next/head";
 import { NextPage } from "next";
 
-import FullPage from "components/FullPage/FullPage";
-import LoginFormContainer from "widgets/authForms/LoginFormContainer";
+import Body from "src/auth/layouts/Login";
 
 const Login: NextPage = () => {
   return (
@@ -11,9 +10,7 @@ const Login: NextPage = () => {
       <Head>
         <title>Login to countive</title>
       </Head>
-      <FullPage gridItemParams={{ md: 4 }}>
-        <LoginFormContainer />
-      </FullPage>
+      <Body />
     </>
   );
 };
