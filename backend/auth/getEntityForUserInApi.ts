@@ -11,11 +11,12 @@ import { getEmailForSession } from "./getEmailForSession";
 export const getEntityForUserInApi = async <Type>(
   req: NextApiRequest,
   res: NextApiResponse,
-  getEntity: (userEmailForSession: string) => Type
+  getEntity: (userEmailForSession: string, ...queryParams: any[]) => Type,
+  ...queryParams: any[]
 ) => {
   const userEmailForSession = await getEmailForSession({ req });
   if (userEmailForSession) {
-    const result = await getEntity(userEmailForSession);
+    const result = await getEntity(userEmailForSession, ...queryParams);
     res.json(result);
   } else {
     res.status(401).end();
