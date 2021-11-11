@@ -4,8 +4,8 @@ import CredentialsProvider, {
 } from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
-import { findUserByEmail } from "lib/databaseOperations/user";
-import { comparePasswords } from "lib/auth/hashPassword";
+import { findUserByEmail } from "backend/repository/user";
+import { comparePasswords } from "backend/auth/hashPassword";
 import prisma from "prisma/prismaClient";
 
 type Credentials = Record<"email" | "password", CredentialInput>;
@@ -52,6 +52,7 @@ const nextAuthOptions = {
   },
 };
 
+// @ts-ignore TODO: fix this
 export default NextAuth(nextAuthOptions);
 
 const breakLoginIfInvalid = (body: CredentialsInputs | undefined) => {

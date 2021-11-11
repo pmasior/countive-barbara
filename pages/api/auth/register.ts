@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { createUserIfNotExist } from "lib/databaseOperations/user";
+import { createUserIfNotExist } from "backend/repository/user";
+import { EMAIL_REGEX } from "backend/constants/fieldsValidationRegexs";
 import prisma from "prisma/prismaClient";
-import { EMAIL_REGEX } from "shared/constants/regexs";
 
 export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const handlePostMethod = async () => {

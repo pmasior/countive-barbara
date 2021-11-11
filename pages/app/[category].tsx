@@ -27,7 +27,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-const Dashboard: NextPage = ({
+const Category: NextPage = ({
   fallback,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   useSession({ required: true });
@@ -46,4 +46,4 @@ const Dashboard: NextPage = ({
   );
 };
 
-export default Dashboard;
+export default Category;
