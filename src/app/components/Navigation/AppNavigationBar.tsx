@@ -12,20 +12,25 @@ const AppNavigationBar: FC<{
   handleDrawerToggleOnClick: () => void;
 }> = ({ handleDrawerToggleOnClick }) => {
   return (
-    <AppBar position="fixed">
-      <Toolbar>
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          onClick={handleDrawerToggleOnClick}
-          sx={{ marginRight: 2 }}
-        >
-          <MenuIcon />
-        </IconButton>
-        <AppLogo variant={"h5"} color={"white"} />
-        <Button onClick={() => signOut()}>Sign out</Button>
-      </Toolbar>
-    </AppBar>
+    <>
+      <AppBar position="fixed">
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerToggleOnClick}
+            sx={{ marginRight: 2 }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <AppLogo variant={"h5"} color={"white"} />
+          {/* TODO: add flex-grow to AppLogo */}
+          {/* TODO: make options with signout visible */}
+          <Button onClick={() => signOut()}>Sign out</Button>
+        </Toolbar>
+      </AppBar>
+      <Toolbar />
+    </>
   );
 };
 

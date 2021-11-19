@@ -5,6 +5,11 @@ export const getSubcategory = async (email: string) =>
     where: { category: { user: { email: email } } },
   });
 
+export const findSubcategory = async (email: string, id: number) =>
+  await prisma.subcategory.findFirst({
+    where: { id: id, category: { user: { email: email } } },
+  });
+
 export const getSubcategoryForCategory = async (
   email: string,
   categoryName: string

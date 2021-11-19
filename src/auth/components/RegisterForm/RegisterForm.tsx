@@ -12,7 +12,7 @@ export type FormFields = Record<"email" | "password", string>;
 
 const RegisterForm: FC<{}> = () => {
   const router = useRouter();
-  const [alertText, setAlertText] = useState<string>("");
+  const [alertText, setAlertText] = useState<string | null>(null);
   const { register, handleSubmit } = useForm<FormFields>();
   const { fetchPOST, loading } = useFetchPOST(API_REGISTER_URL);
 
@@ -21,6 +21,7 @@ const RegisterForm: FC<{}> = () => {
     if (error) {
       setAlertText(json?.message || text);
     } else if (status === 201) {
+      setAlertText(null);
       router.push("/login");
     }
   };

@@ -1,6 +1,5 @@
 import React, { FC, ReactNode, useState } from "react";
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
 
 import AppNavigationBar from "./AppNavigationBar";
 import AppNavigationDrawer from "./AppNavigationDrawer";
@@ -20,10 +19,7 @@ const AppNavigation: FC<{ children: ReactNode }> = ({ children }) => {
         openDrawerOnMobile={openDrawerOnMobile}
         handleDrawerToggleOnClick={handleDrawerToggleOnClick}
       />
-      <Box component="main">
-        <Toolbar />
-        {children}
-      </Box>
+      <Box component="main">{children}</Box>
     </>
   );
 };

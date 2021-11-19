@@ -15,9 +15,11 @@ import {
   API_CATEGORY_URL,
   API_FIND_SUBCATEGORY_BY_CATEGORY_URL,
   API_ICON_URL,
+  API_TRANSACTION_URL,
 } from "src/common/constants/urls";
-import Body from "src/app/layouts/Category";
+import Body from "src/app/layouts/AddTransaction";
 import { getSubcategoryForCategory } from "backend/repository/subcategory";
+import { getTransaction } from "backend/repository/transaction";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const categories = await getEntityForUserInSSR(context, getCategory);
@@ -27,6 +29,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     getSubcategoryForCategory,
     categoryFromParams
   );
+  const transactions = await getEntityForUserInSSR(context, getTransaction);
+  console.log(transactions);
   const icons = await getIcon();
   return {
     props: {
@@ -35,12 +39,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         [API_ICON_URL]: icons,
         [`${API_FIND_SUBCATEGORY_BY_CATEGORY_URL}${categoryFromParams}`]:
           subcategories,
+        // [API_TRANSACTION_URL]: transactions,  // TODO: fix `object` ("[object Decimal]") cannot be serialized as JSON
+        [API_TRANSACTION_URL]: [],
       },
     },
   };
 };
 
-const Category: NextPage = ({
+// TODO: fix code duplication with index.tsx
+const AddTransaction: NextPage = ({
   fallback,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   useSession({ required: true });
@@ -59,4 +66,4 @@ const Category: NextPage = ({
   );
 };
 
-export default Category;
+export default AddTransaction;

@@ -7,7 +7,7 @@ import TextField, { TextFieldProps } from "@mui/material/TextField";
 type FormFieldsProps = {
   formProps?: FormHTMLAttributes<HTMLFormElement>;
   textFieldsProps: TextFieldProps[];
-  alertText?: string;
+  alertText?: string | null;
   buttonTitle: string;
 };
 
