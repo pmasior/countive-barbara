@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "initdb": "ts-node prisma/seed.ts"
+    "initdb": "ts-node prisma/seed.ts",
+    "test": "jest"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
@@ -22,7 +23,10 @@
     "@mui/x-data-grid": "^5.0.0-beta.7",
     "@next-auth/prisma-adapter": "^0.5.2-next.19",
     "@prisma/client": "^3.3.0",
+    "@testing-library/jest-dom": "^5.15.0",
+    "@testing-library/react": "^12.1.2",
     "date-fns": "^2.25.0",
+    "jest": "^27.3.1",
     "next": "11.1.2",
     "next-auth": "4.0.0-beta.6",
     "react": "17.0.2",
