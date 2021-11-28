@@ -172,7 +172,14 @@ export default {
   // timers: "real",
 
   // A map from regular expressions to paths to transformers
-  // transform: undefined,
+  // NOTE: If you wanted to be able to use a new language feature in (...)
+  // your tests that aren't yet supported by node, you might plug in one of
+  // many compilers that compile a future version of JavaScript to a current
+  // one (docs: https://jestjs.io/docs/configuration)
+  // Allows to use import (instead require())
+  transform: {
+    "^.+\\.(js|jsx|ts|tsx)$": ["babel-jest", { presets: ["next/babel"] }],
+  },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   // transformIgnorePatterns: [
