@@ -86,6 +86,11 @@ export default {
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
   // modulePathIgnorePatterns: [],
 
+  // NOTE: an array of absolute Paths to additional locations to search when
+  // resolving modules (docs: https://jestjs.io/docs/configuration).
+  // Allows for import using absolute path in tests
+  modulePaths: ["<rootDir>"],
+
   // Activates notifications for test results
   // notify: false,
 
@@ -175,7 +180,7 @@ export default {
   // NOTE: If you wanted to be able to use a new language feature in (...)
   // your tests that aren't yet supported by node, you might plug in one of
   // many compilers that compile a future version of JavaScript to a current
-  // one (docs: https://jestjs.io/docs/configuration)
+  // one (docs: https://jestjs.io/docs/configuration).
   // Allows to use import (instead require())
   transform: {
     "^.+\\.(js|jsx|ts|tsx)$": ["babel-jest", { presets: ["next/babel"] }],
