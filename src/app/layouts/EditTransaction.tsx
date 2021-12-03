@@ -2,17 +2,17 @@ import { useSession } from "next-auth/react";
 import React, { FC } from "react";
 import CategoryDashboard from "../components/CategoryDashboard/CategoryDashboard";
 import AppNavigation from "../components/Navigation/AppNavigation";
-import AddTransactionForm from "../components/TransactionForm/AddTransactionForm";
+import EditTransactionForm from "../components/TransactionForm/EditTransactionForm";
 
-const AddTransaction: FC<{}> = () => {
+const EditTransaction: FC<{}> = () => {
   useSession({ required: true });
 
   return (
     <AppNavigation>
       <CategoryDashboard />
-      <AddTransactionForm />
+      <EditTransactionForm />
     </AppNavigation>
   );
 };
 
-export default AddTransaction;
+export default EditTransaction;

@@ -1,4 +1,7 @@
+import { Tag } from ".prisma/client";
+import { TextField } from "@mui/material";
 import Alert from "@mui/material/Alert";
+import Autocomplete from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -7,11 +10,16 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
 import React, { FC, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { API_TRANSACTION_URL } from "src/common/constants/urls";
-import { useFetchPOST } from "src/common/hooks/useFetchPost";
+import { useFetchCurrency } from "src/app/hooks/useFetchCurrency";
+import { useFetchSettlementAccount } from "src/app/hooks/useFetchSettlementAccount";
+import { useFetchTags } from "src/app/hooks/useFetchTags";
+import { useGenerateMethodOfPayment } from "src/app/hooks/useGenerateMethodOfPayment";
+import { useGenerateSubcategories } from "src/app/hooks/useGenerateSubcategories";
+import { FetchPostReturn } from "src/common/hooks/useMutate";
 import { CustomDatePicker } from "../Form/CustomDatePicker";
 import CustomSelectInput from "../Form/CustomSelectInput";
 import CustomTextInput from "../Form/CustomTextInput";
+import SelectOptionWithIcon from "../Form/IconInMenuItem";
 
 export type FormFieldsNames = {
   addedAt: Date;
@@ -21,29 +29,49 @@ export type FormFieldsNames = {
   subcategoryId: number;
   settlementAccountId: number;
   methodOfPaymentId: number;
+  tags: Tag[];
 };
 
-export const TransactionForm: FC<{}> = () => {
+type TransactionFormProps = {
+  defaultValues: {
+    addedAt?: Date;
+    amount?: string;
+    note?: string;
+    currencyId?: number;
+    subcategoryId?: number;
+    settlementAccountId?: number;
+    methodOfPaymentId?: number;
+    tags?: Tag[];
+  };
+  mutate: (body: any) => Promise<FetchPostReturn>;
+};
+
+export const TransactionForm: FC<TransactionFormProps> = ({
+  defaultValues,
+  mutate,
+}) => {
+  console.log(defaultValues);
+  const subcategories = useGenerateSubcategories();
+  const { settlementAccounts } = useFetchSettlementAccount();
+  const { currencies } = useFetchCurrency();
+  const methodOfPayments = useGenerateMethodOfPayment();
+  const { tags } = useFetchTags();
   const [alertText, setAlertText] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
     setError,
     setValue,
+    getValues,
     control,
     clearErrors,
     formState: { errors },
   } = useForm<FormFieldsNames>({
-    defaultValues: {
-      addedAt: new Date(),
-      // TODO: read default values from database
-      // currencyId: 1,
-    },
+    defaultValues: { ...defaultValues },
   });
-  const { fetchPOST, loading } = useFetchPOST(API_TRANSACTION_URL);
 
   const onSubmit: SubmitHandler<FormFieldsNames> = async (data, e) => {
-    const { error, json, text } = await fetchPOST(data);
+    const { error, json, text } = await mutate(data);
     if (error) {
       setAlertText(json?.message || text);
     } else {
@@ -89,41 +117,100 @@ export const TransactionForm: FC<{}> = () => {
             <Grid item xs={12} md={6}>
               <CustomSelectInput
                 errorText={errors.currencyId?.message}
+                reactHookFormProps={{ getValues }}
                 inputProps={register("currencyId", {
                   required: "Currency is required",
                 })}
                 label="Currency"
-                options={[{ value: 1, label: "zł" }]}
+                name="currencyId"
+                options={
+                  currencies?.map((c) => ({
+                    value: c.id,
+                    label: c.shortName,
+                  })) || []
+                }
               />
             </Grid>
             <Grid item xs={12}>
               <CustomSelectInput
                 errorText={errors.subcategoryId?.message}
+                reactHookFormProps={{ getValues }}
                 inputProps={register("subcategoryId", {
                   required: "Subcategory is required",
                 })}
                 label="Subcategory"
-                options={[{ value: 1, label: "Spożywcze" }]}
+                name="subcategoryId"
+                // TODO: filter subcategories by category
+                options={
+                  subcategories?.map((s) => ({
+                    value: s.id,
+                    label: (
+                      <SelectOptionWithIcon
+                        color={s.color}
+                        iconName={s.icon?.name || ""}
+                        label={s.name}
+                      />
+                    ),
+                  })) || []
+                }
               />
             </Grid>
             <Grid item xs={12} md={6}>
               <CustomSelectInput
                 errorText={errors.settlementAccountId?.message}
+                reactHookFormProps={{ getValues }}
                 inputProps={register("settlementAccountId", {
                   required: "Settlement Account is required",
                 })}
                 label="Settlement Account"
-                options={[{ value: 1, label: "Santander" }]}
+                name="settlementAccountId"
+                options={
+                  settlementAccounts?.map((s) => ({
+                    value: s.id,
+                    label: s.name,
+                  })) || []
+                }
               />
             </Grid>
             <Grid item xs={12} md={6}>
               <CustomSelectInput
                 errorText={errors.methodOfPaymentId?.message}
+                reactHookFormProps={{ getValues }}
                 inputProps={register("methodOfPaymentId", {
                   required: "Method of Payment is required",
                 })}
                 label="Method of Payment"
-                options={[{ value: 1, label: "MasterCard" }]}
+                name="methodOfPaymentId"
+                options={
+                  methodOfPayments?.map((m) => ({
+                    value: m.id,
+                    label: (
+                      <SelectOptionWithIcon
+                        color={"initial"}
+                        iconName={m.icon?.name || ""}
+                        label={m.name}
+                      />
+                    ),
+                  })) || []
+                }
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Autocomplete
+                multiple
+                id="tags"
+                options={tags || []}
+                getOptionLabel={(option) => option.name}
+                defaultValue={getValues("tags")}
+                onChange={(e, v) => setValue("tags", v)}
+                renderInput={(params) => (
+                  <TextField
+                    SelectProps={register("tags")}
+                    {...params}
+                    label="Tags"
+                    placeholder="Tags"
+                  />
+                )}
               />
             </Grid>
             <Grid item xs={12}>

@@ -8,14 +8,15 @@ import {
 import { useSession } from "next-auth/react";
 import { SWRConfig } from "swr";
 
-import Body from "src/app/layouts/Category";
+import Body from "src/app/layouts/EditTransaction";
 import { getFallbackForApp } from "backend/utils/getFallbackForApp";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return { props: { fallback: { ...(await getFallbackForApp(context)) } } };
 };
 
-const Category: NextPage = ({
+// TODO: fix code duplication with index.tsx
+const EditTransaction: NextPage = ({
   fallback,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   useSession({ required: true });
@@ -34,4 +35,4 @@ const Category: NextPage = ({
   );
 };
 
-export default Category;
+export default EditTransaction;

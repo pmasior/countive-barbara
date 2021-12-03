@@ -1,18 +1,16 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { getEntityForUserInApi } from "backend/auth/getEntityForUserInApi";
-import {
-  createTransaction,
-  getTransactions,
-} from "backend/repository/transaction";
+import { findTags } from "backend/repository/tag";
 
 export const handle = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case "GET": {
-      return getEntityForUserInApi(req, res, getTransactions);
+      return getEntityForUserInApi(req, res, findTags);
     }
     case "POST": {
-      return getEntityForUserInApi(req, res, createTransaction, req.body);
+      // TODO:
+      return;
     }
     default: {
       res.status(405).end();

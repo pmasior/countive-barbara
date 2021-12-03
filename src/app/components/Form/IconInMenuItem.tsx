@@ -4,20 +4,25 @@ import React, { FC } from "react";
 type IconInMenuItemProps = {
   color: string;
   iconName: string;
+  label: string;
 };
 
-export const IconInMenuItem: FC<IconInMenuItemProps> = ({
+export const SelectOptionWithIcon: FC<IconInMenuItemProps> = ({
   color,
   iconName,
+  label,
 }) => {
   return (
-    <Icon
-      fontSize="small"
-      sx={{ color: color, fontSize: 16, verticalAlign: "bottom" }}
-    >
-      {iconName}
-    </Icon>
+    <>
+      <Icon
+        fontSize="small"
+        sx={{ color: color, fontSize: 16, verticalAlign: "bottom" }}
+      >
+        {iconName}
+      </Icon>{" "}
+      {label}
+    </>
   );
 };
 
-export default IconInMenuItem;
+export default SelectOptionWithIcon;

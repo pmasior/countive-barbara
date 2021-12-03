@@ -1,21 +1,21 @@
 import { useState } from "react";
 
-interface FetchPostReturn {
+export interface FetchPostReturn {
   error: boolean;
   json?: any;
   status?: number;
   text: string;
 }
 
-export const useFetchPOST = (url: string) => {
+export const useMutate = (url: string, method: "POST" | "PUT") => {
   const [loading, setLoading] = useState<boolean>(false);
 
-  const fetchPOST = async <ResponseType = any>(
+  const mutate = async <ResponseType = any>(
     body: any
   ): Promise<FetchPostReturn> => {
     setLoading(true);
     try {
-      const res = await runFetchPOST(body);
+      const res = await runFetch(body);
       setLoading(false);
       return await returnFetchResponse<ResponseType>(res);
     } catch (err) {
@@ -27,11 +27,11 @@ export const useFetchPOST = (url: string) => {
     }
   };
 
-  const runFetchPOST = async (body: any): Promise<Response> =>
+  const runFetch = async (body: any): Promise<Response> =>
     await fetch(url, {
       body: JSON.stringify(body),
       headers: { "Content-Type": "application/json" },
-      method: "POST",
+      method: method,
     });
 
   const returnFetchResponse = async <ResponseType>(
@@ -56,5 +56,5 @@ export const useFetchPOST = (url: string) => {
     }
   };
 
-  return { fetchPOST, loading };
+  return { mutate, loading };
 };

@@ -19,7 +19,7 @@ import {
 } from "src/common/constants/urls";
 import Body from "src/app/layouts/FastAdd";
 import { getSubcategoryForCategory } from "backend/repository/subcategory";
-import { getTransaction } from "backend/repository/transaction";
+import { getTransactions } from "backend/repository/transaction";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const categories = await getEntityForUserInSSR(context, getCategory);
@@ -29,7 +29,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     getSubcategoryForCategory,
     categoryFromParams
   );
-  const transactions = await getEntityForUserInSSR(context, getTransaction);
+  const transactions = await getEntityForUserInSSR(context, getTransactions);
   console.log(transactions);
   const icons = await getIcon();
   return {
