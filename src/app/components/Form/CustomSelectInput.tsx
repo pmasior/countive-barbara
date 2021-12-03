@@ -6,10 +6,9 @@ import { FormFieldsNames } from "../TransactionForm/TransactionForm";
 
 type CustomSelectInputProps = {
   errorText?: string | undefined;
-  reactHookFormProps: { getValues: UseFormGetValues<FormFieldsNames> };
+  defaultValue?: string | number | Date;
   inputProps: UseFormRegisterReturn;
   label: string;
-  name: keyof FormFieldsNames;
   options: Option[];
 };
 
@@ -21,18 +20,15 @@ type Option = {
 export const CustomSelectInput: FC<CustomSelectInputProps> = ({
   errorText = null,
   inputProps,
-  reactHookFormProps,
+  defaultValue,
   label,
-  name,
   options,
 }) => {
-  const { getValues } = reactHookFormProps;
-
   return (
     <TextField
       select
       SelectProps={inputProps}
-      defaultValue={getValues(name)}
+      defaultValue={defaultValue}
       inputProps={inputProps}
       label={label}
       error={!!errorText}
