@@ -1,5 +1,5 @@
 import {
-  RecognizableEntries,
+  Entity,
   RecognizedField,
 } from "./convertFastTransactionToTransaction.types";
 import {
@@ -18,7 +18,7 @@ import { splitToWords } from "./splitToWords";
 export const recognizeByPrediction = (
   inputTransaction: string,
   fieldName: keyof RecognizedField,
-  recognizableEntries: RecognizableEntries[]
+  recognizableEntries: Entity[]
 ) => {
   let recognizedFields: RecognizedField = {};
 
@@ -43,8 +43,9 @@ export const recognizeByPrediction = (
  */
 export const recognizeManyByPrediction = (
   inputTransaction: string,
-  fieldName: keyof RecognizedField,
-  recognizableEntries: RecognizableEntries[]
+  // TODO: change to mapped type
+  fieldName: keyof Pick<RecognizedField, "tagIds">,
+  recognizableEntries: Entity[]
 ) => {
   let recognizedFields: RecognizedField = {};
 
@@ -68,7 +69,7 @@ export const recognizeManyByPrediction = (
  */
 export const findManyEntities = (
   words: RegExpMatchArray,
-  recognizableEntries: RecognizableEntries[]
+  recognizableEntries: Entity[]
 ) => {
   let foundValues: string[] = [];
   let ids: number[] = [];
@@ -96,7 +97,7 @@ export const findManyEntities = (
  */
 export const findOneEntity = (
   words: RegExpMatchArray,
-  recognizableEntries: RecognizableEntries[]
+  recognizableEntries: Entity[]
 ) => {
   let foundValue: string | null = null;
   let id: number | null = null;
@@ -126,7 +127,7 @@ export const findOneEntity = (
  */
 export const findEntityForWord = (
   word: string,
-  recognizableEntries: RecognizableEntries[]
+  recognizableEntries: Entity[]
 ) => {
   const startsWithRegex = new RegExp(`^${word}.*`, "i");
   const matchesToWord = findEntriesMatchingToRegex(
@@ -150,7 +151,7 @@ export const findEntityForWord = (
  * @returns object with number of matching chars and properties of matching entry
  */
 const findEntriesMatchingToRegex = (
-  recognizableEntries: RecognizableEntries[],
+  recognizableEntries: Entity[],
   startsWithRegex: RegExp
 ) => {
   const matchingEntries = recognizableEntries.map((e) => {

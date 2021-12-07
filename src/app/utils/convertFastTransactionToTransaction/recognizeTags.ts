@@ -1,5 +1,5 @@
 import {
-  RecognizableEntries,
+  Entity,
   RecognizedField,
 } from "./convertFastTransactionToTransaction.types";
 import { mergeToObject } from "./mergeToObject";
@@ -21,7 +21,7 @@ export const TAG_REGEX = String.raw`
  */
 export const recognizeTag = (
   inputTransaction: string,
-  recognizableEntries: RecognizableEntries[]
+  recognizableEntries: Entity[]
 ) => {
   let recognizedByRegex: RecognizedField;
   ({ recognizedFields: recognizedByRegex, inputTransaction } =
@@ -52,7 +52,7 @@ export const recognizeTag = (
  */
 export const convertToTags = (
   foundValues: string[],
-  recognizableEntries?: RecognizableEntries[]
+  recognizableEntries?: Entity[]
 ) => {
   if (!recognizableEntries)
     throw new Error(

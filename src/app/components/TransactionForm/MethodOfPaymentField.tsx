@@ -1,3 +1,4 @@
+import { isEmpty } from "lodash";
 import React, { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { useGenerateMethodOfPayment } from "src/app/hooks/useGenerateMethodOfPayment";
@@ -19,25 +20,27 @@ export const MethodOfPaymentField: FC<{
   const name = "methodOfPaymentId";
 
   return (
-    <CustomSelectInput
-      defaultValue={getValues(name)}
-      errorText={errors.methodOfPaymentId?.message}
-      inputProps={register("methodOfPaymentId", {
-        required: "Method of Payment is required",
-      })}
-      label="Method of Payment"
-      options={
-        methodOfPayments?.map((m) => ({
-          value: m.id,
-          label: (
-            <SelectOptionWithIcon
-              color={"initial"}
-              iconName={m.icon?.name || ""}
-              label={m.name}
-            />
-          ),
-        })) || []
-      }
-    />
+    <>
+      {!isEmpty(methodOfPayments) && (
+        <CustomSelectInput
+          defaultValue={getValues(name)}
+          errorText={errors.methodOfPaymentId?.message}
+          inputProps={register("methodOfPaymentId", {
+            required: "Method of Payment is required",
+          })}
+          label="Method of Payment"
+          options={methodOfPayments.map((m) => ({
+            value: m.id,
+            label: (
+              <SelectOptionWithIcon
+                color={"initial"}
+                iconName={m.icon?.name || ""}
+                label={m.name}
+              />
+            ),
+          }))}
+        />
+      )}
+    </>
   );
 };

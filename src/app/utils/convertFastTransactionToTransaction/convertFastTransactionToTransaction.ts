@@ -18,8 +18,9 @@ import { splitToWords } from "./splitToWords";
  */
 export const convertFastTransactionToTransaction = (
   inputTransaction: string,
-  recognizableEntries: RecognizableEntries[]
+  recognizableEntries: RecognizableEntries
 ) => {
+  const { subcategories, tags } = recognizableEntries;
   let recognizedFields: RecognizedField = {};
   let transaction: RecognizedField = {};
 
@@ -34,33 +35,20 @@ export const convertFastTransactionToTransaction = (
 
   ({ recognizedFields, inputTransaction } = recognizeSubcategory(
     inputTransaction,
-    getAvailableSubcategories(recognizableEntries)
+    subcategories
   ));
   mergeToObject(transaction, recognizedFields);
 
   ({ recognizedFields, inputTransaction } = recognizeTag(
     inputTransaction,
-    getAvailableTags(recognizableEntries)
+    tags
   ));
   mergeToObject(transaction, recognizedFields);
 
   const unprocessabled = splitToWords(inputTransaction);
-
-  if (unprocessabled) {
-    console.error(unprocessabled);
-  } else {
-    console.log(transaction);
-  }
 
   return {
     transaction,
     unprocessabled,
   };
 };
-
-const getAvailableSubcategories = (
-  recognizableEntries: RecognizableEntries[]
-) => recognizableEntries.filter((e) => e.type === "subcategory");
-
-const getAvailableTags = (recognizableEntries: RecognizableEntries[]) =>
-  recognizableEntries.filter((e) => e.type === "tag");

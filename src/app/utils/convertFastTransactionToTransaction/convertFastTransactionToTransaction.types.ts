@@ -1,15 +1,16 @@
 import { Prisma } from ".prisma/client";
 
 export type RecognizedField = {
-  date?: null | Date;
-  amount?: null | Prisma.Decimal;
-  tagIds?: null | number[] | Array;
-  note?: null | string;
-  subcategory?: null | number;
+  date?: Date;
+  amount?: Prisma.Decimal;
+  tagIds?: number[];
+  note?: string;
+  subcategory?: number;
 };
 
+export type Entity = { id: number; name: string };
+
 export type RecognizableEntries = {
-  type: "subcategory" | "tag";
-  id: number;
-  name: string;
+  subcategories: Entity[];
+  tags: Entity[];
 };

@@ -4,7 +4,7 @@ import {
 } from "./removeStringFromString";
 import { compileVerboseRegex } from "src/common/utils/verboseRegex";
 import {
-  RecognizableEntries,
+  Entity,
   RecognizedField,
 } from "./convertFastTransactionToTransaction.types";
 
@@ -18,9 +18,14 @@ import {
  */
 export const recognizeByRegex = <T>(
   inputTransaction: string,
-  fieldName: keyof RecognizedField,
+  // TODO: change to mapped type
+  fieldName: keyof Pick<
+    RecognizedField,
+    "date" | "amount" | "note" | "subcategory"
+  >,
   regex: string,
-  convert: (foundValue: string) => { foundValue: string; parsedValue: T }
+  // TODO: change any to specified type
+  convert: (foundValue: string) => { foundValue: string; parsedValue: any }
 ) => {
   let recognizedFields: RecognizedField = {};
   let foundValue;
@@ -45,15 +50,16 @@ export const recognizeByRegex = <T>(
  * @param convert fuction which converts recognized values to entity
  * @returns object with recognized field and inputTransaction without recognized informations
  */
-export const recognizeValuesByRegex = <T>(
+export const recognizeValuesByRegex = (
   inputTransaction: string,
-  fieldName: keyof RecognizedField,
+  // TODO: change to mapped type
+  fieldName: keyof Pick<RecognizedField, "tagIds">,
   regex: string,
   convert: (
     foundValues: string[],
-    recognizableEntries?: RecognizableEntries[]
-  ) => { foundValues: string[]; parsedValues: T },
-  recognizableEntries?: RecognizableEntries[]
+    recognizableEntries?: Entity[]
+  ) => { foundValues: string[]; parsedValues: number[] | null },
+  recognizableEntries?: Entity[]
 ) => {
   let recognizedFields: RecognizedField = {};
   let foundValues;

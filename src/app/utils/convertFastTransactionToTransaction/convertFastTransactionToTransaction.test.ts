@@ -4,38 +4,36 @@ import { RecognizableEntries } from "./convertFastTransactionToTransaction.types
 
 //   TODO: mock Date to always return 2021
 describe("convertFastTransactionToTransaction", () => {
-  const recognizableEntries: RecognizableEntries[] = [
-    {
-      type: "subcategory",
-      id: 1,
-      name: "Spożywcze",
-    },
-    {
-      type: "tag",
-      id: 12,
-      name: "Kaufland",
-    },
-    {
-      type: "tag",
-      id: 15,
-      name: "Kraków",
-    },
-    {
-      type: "subcategory",
-      id: 21,
-      name: "Dom",
-    },
-    {
-      type: "subcategory",
-      id: 22,
-      name: "Domownicy",
-    },
-    {
-      type: "subcategory",
-      id: 23,
-      name: "Wynagrodzenie",
-    },
-  ];
+  const recognizableEntries: RecognizableEntries = {
+    subcategories: [
+      {
+        id: 1,
+        name: "Spożywcze",
+      },
+      {
+        id: 21,
+        name: "Dom",
+      },
+      {
+        id: 22,
+        name: "Domownicy",
+      },
+      {
+        id: 23,
+        name: "Wynagrodzenie",
+      },
+    ],
+    tags: [
+      {
+        id: 12,
+        name: "Kaufland",
+      },
+      {
+        id: 15,
+        name: "Kraków",
+      },
+    ],
+  };
 
   it.each`
     inputTransaction                          | date                          | amount      | note          | subcategory | tagIds
@@ -49,6 +47,7 @@ describe("convertFastTransactionToTransaction", () => {
         inputTransaction,
         recognizableEntries
       );
+      // TODO: it stops work in 2022 year
 
       expect(transaction).toEqual({
         date: new Date(date),

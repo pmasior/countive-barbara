@@ -1,3 +1,4 @@
+import { isEmpty } from "lodash";
 import React, { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { useFetchSettlementAccount } from "src/app/hooks/useFetchSettlementAccount";
@@ -18,19 +19,21 @@ export const SettlementAccountField: FC<{
   const name = "settlementAccountId";
 
   return (
-    <CustomSelectInput
-      defaultValue={getValues(name)}
-      errorText={errors.settlementAccountId?.message}
-      inputProps={register("settlementAccountId", {
-        required: "Settlement Account is required",
-      })}
-      label="Settlement Account"
-      options={
-        settlementAccounts?.map((s) => ({
-          value: s.id,
-          label: s.name,
-        })) || []
-      }
-    />
+    <>
+      {!isEmpty(settlementAccounts) && (
+        <CustomSelectInput
+          defaultValue={getValues(name)}
+          errorText={errors.settlementAccountId?.message}
+          inputProps={register("settlementAccountId", {
+            required: "Settlement Account is required",
+          })}
+          label="Settlement Account"
+          options={settlementAccounts.map((s) => ({
+            value: s.id,
+            label: s.name,
+          }))}
+        />
+      )}
+    </>
   );
 };

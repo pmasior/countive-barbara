@@ -23,34 +23,35 @@ export type FormFieldsNames = {
   addedAt: Date;
   amount: string;
   note: string;
-  currencyId: number;
-  subcategoryId: number;
-  settlementAccountId: number;
-  methodOfPaymentId: number;
-  tags: Tag[];
+  currencyId: number | "";
+  subcategoryId: number | "";
+  settlementAccountId: number | "";
+  methodOfPaymentId: number | "";
+  tags: number[];
 };
 
 type TransactionFormProps = {
-  defaultValues: {
-    addedAt?: Date;
-    amount?: string;
-    note?: string;
-    currencyId?: number;
-    subcategoryId?: number;
-    settlementAccountId?: number;
-    methodOfPaymentId?: number;
-    tags?: Tag[];
-  };
+  defaultValues: Partial<FormFieldsNames>;
   mutate: (body: any) => Promise<FetchPostReturn>;
+  warningText?: string;
 };
 
 export const TransactionForm: FC<TransactionFormProps> = ({
   defaultValues,
   mutate,
+  warningText,
 }) => {
   const [alertText, setAlertText] = useState<string | null>(null);
   const router = useRouter();
-  const form = useForm<FormFieldsNames>({ defaultValues });
+  const form = useForm<FormFieldsNames>({
+    defaultValues: {
+      subcategoryId: "",
+      currencyId: "",
+      settlementAccountId: "",
+      methodOfPaymentId: "",
+      ...defaultValues,
+    },
+  });
   const { handleSubmit } = form;
 
   const onSubmit: SubmitHandler<FormFieldsNames> = async (data, e) => {
@@ -98,6 +99,11 @@ export const TransactionForm: FC<TransactionFormProps> = ({
             {alertText && (
               <Grid item xs={12}>
                 <Alert severity="error">{alertText}</Alert>
+              </Grid>
+            )}
+            {warningText && (
+              <Grid item xs={12}>
+                <Alert severity="warning">{warningText}</Alert>
               </Grid>
             )}
           </Grid>

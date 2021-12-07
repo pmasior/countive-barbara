@@ -7,6 +7,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Button from "@mui/material/Button";
 
 import AppLogo from "src/common/components/AppLogo/AppLogo";
+import { NavigationTabs } from "./NavigationTabs";
+import { SearchField } from "./SearchField";
 
 const AppNavigationBar: FC<{
   handleDrawerToggleOnClick: () => void;
@@ -25,6 +27,8 @@ const AppNavigationBar: FC<{
           </IconButton>
           <AppLogo variant={"h5"} color={"white"} />
           {/* TODO: add flex-grow to AppLogo */}
+          <NavigationTabs />
+          <SearchField />
           {/* TODO: make options with signout visible */}
           <Button onClick={() => signOut()}>Sign out</Button>
         </Toolbar>

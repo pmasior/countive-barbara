@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import React, { FC } from "react";
 import { useFetchCurrency } from "src/app/hooks/useFetchCurrency";
 import { useFetchSettlementAccount } from "src/app/hooks/useFetchSettlementAccount";
+import { useFetchTags } from "src/app/hooks/useFetchTags";
 import { useFetchTransactions } from "src/app/hooks/useFetchTransaction";
 import { useGenerateMethodOfPayment } from "src/app/hooks/useGenerateMethodOfPayment";
 import { useGenerateSubcategories } from "src/app/hooks/useGenerateSubcategories";
@@ -29,6 +30,7 @@ const TransactionTable: FC<{}> = () => {
   const { settlementAccounts } = useFetchSettlementAccount();
   const { currencies } = useFetchCurrency();
   const methodOfPayments = useGenerateMethodOfPayment();
+  const { tags } = useFetchTags();
 
   const getDate = (params: GridValueGetterParams) => new Date(params.value);
 
@@ -69,7 +71,7 @@ const TransactionTable: FC<{}> = () => {
       minWidth: 40,
       width: 44,
     },
-    { field: "tags", headerName: "Tags", renderCell: TagsCell, flex: 1 },
+    { field: "tags", headerName: "Tags", renderCell: TagsCell(tags), flex: 1 },
     { field: "note", headerName: "Note", flex: 2 },
     {
       field: "settlementAccountId",

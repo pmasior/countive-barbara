@@ -1,3 +1,4 @@
+import { isEmpty } from "lodash";
 import React, { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { useGenerateSubcategories } from "src/app/hooks/useGenerateSubcategories";
@@ -19,26 +20,28 @@ export const SubcategoryField: FC<{ form: UseFormReturn<FormFieldsNames> }> = ({
   const name = "subcategoryId";
 
   return (
-    <CustomSelectInput
-      defaultValue={getValues(name)}
-      errorText={errors.subcategoryId?.message}
-      inputProps={register("subcategoryId", {
-        required: "Subcategory is required",
-      })}
-      label="Subcategory"
-      // TODO: filter subcategories by category
-      options={
-        subcategories?.map((s) => ({
-          value: s.id,
-          label: (
-            <SelectOptionWithIcon
-              color={s.color}
-              iconName={s.icon?.name || ""}
-              label={s.name}
-            />
-          ),
-        })) || []
-      }
-    />
+    <>
+      {!isEmpty(subcategories) && (
+        <CustomSelectInput
+          defaultValue={getValues(name)}
+          errorText={errors.subcategoryId?.message}
+          inputProps={register("subcategoryId", {
+            required: "Subcategory is required",
+          })}
+          label="Subcategory"
+          // TODO: filter subcategories by category
+          options={subcategories.map((s) => ({
+            value: s.id,
+            label: (
+              <SelectOptionWithIcon
+                color={s.color}
+                iconName={s.icon?.name || ""}
+                label={s.name}
+              />
+            ),
+          }))}
+        />
+      )}
+    </>
   );
 };

@@ -1,0 +1,9 @@
+.searchField {
+  background-color: #ffffff50;
+  border-color: #ffffff50;
+}
+
+.searchField:hover {
+  background-color: #ffffff80;
+  border-color: #ffffff80;
+}
