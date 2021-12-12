@@ -5,7 +5,9 @@ import {
 import { mergeToObject } from "./mergeToObject";
 import { recognizeAmount } from "./recognizeAmount";
 import { recognizeDate } from "./recognizeDate";
+import { recognizeMethodOfPayment } from "./recognizeMethodOfPayment";
 import { recognizeNote } from "./recognizeNote";
+import { recognizeSettlementAccount } from "./recognizeSettlementAccount";
 import { recognizeSubcategory } from "./recognizeSubcategory";
 import { recognizeTag } from "./recognizeTags";
 import { splitToWords } from "./splitToWords";
@@ -20,7 +22,8 @@ export const convertFastTransactionToTransaction = (
   inputTransaction: string,
   recognizableEntries: RecognizableEntries
 ) => {
-  const { subcategories, tags } = recognizableEntries;
+  const { subcategories, tags, settlementAccounts, methodOfPayments } =
+    recognizableEntries;
   let recognizedFields: RecognizedField = {};
   let transaction: RecognizedField = {};
 
@@ -36,6 +39,20 @@ export const convertFastTransactionToTransaction = (
   ({ recognizedFields, inputTransaction } = recognizeSubcategory(
     inputTransaction,
     subcategories
+  ));
+  mergeToObject(transaction, recognizedFields);
+
+  ({ recognizedFields, inputTransaction } = recognizeSettlementAccount(
+    inputTransaction,
+    settlementAccounts
+  ));
+  mergeToObject(transaction, recognizedFields);
+
+  ({ recognizedFields, inputTransaction } = recognizeMethodOfPayment(
+    inputTransaction,
+    methodOfPayments.filter(
+      (m) => m.settlementAccountId === transaction.settlementAccountId
+    )
   ));
   mergeToObject(transaction, recognizedFields);
 

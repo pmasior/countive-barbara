@@ -39,16 +39,17 @@ model Session {
 }
 
 model User {
-  id                String              @id @default(cuid())
-  name              String?
-  email             String              @unique
-  emailVerified     DateTime?
-  password          String?
-  image             String?
-  accounts          Account[]
-  sessions          Session[]
-  categories        Category[]
-  SettlementAccount SettlementAccount[]
+  id                       String                     @id @default(cuid())
+  name                     String?
+  email                    String                     @unique
+  emailVerified            DateTime?
+  password                 String?
+  image                    String?
+  accounts                 Account[]
+  sessions                 Session[]
+  categories               Category[]
+  settlementAccounts       SettlementAccount[]
+  defaultTransactionValues DefaultTransactionValues[]
 }
 
 model VerificationToken {
@@ -81,15 +82,16 @@ model CategoryBudget {
 }
 
 model Subcategory {
-  id                Int                 @id @default(autoincrement())
-  icon              Icon                @relation(fields: [iconId], references: [id])
-  iconId            Int
-  category          Category            @relation(fields: [categoryId], references: [id])
-  categoryId        Int
-  name              String
-  color             String              @db.VarChar(25)
-  subcategoryBudget SubcategoryBudget[]
-  Transaction       Transaction[]
+  id                       Int                        @id @default(autoincrement())
+  icon                     Icon                       @relation(fields: [iconId], references: [id])
+  iconId                   Int
+  category                 Category                   @relation(fields: [categoryId], references: [id])
+  categoryId               Int
+  name                     String
+  color                    String                     @db.VarChar(25)
+  subcategoryBudget        SubcategoryBudget[]
+  transactions             Transaction[]
+  defaultTransactionValues DefaultTransactionValues[]
 }
 
 model SubcategoryBudget {
@@ -118,23 +120,25 @@ model Tag {
 }
 
 model SettlementAccount {
-  id                Int               @id @default(autoincrement())
-  user              User              @relation(fields: [userId], references: [id])
-  name              String
-  color             String            @db.VarChar(25)
-  methodsOfPayments MethodOfPayment[]
-  userId            String
-  Transaction       Transaction[]
+  id                       Int                        @id @default(autoincrement())
+  user                     User                       @relation(fields: [userId], references: [id])
+  name                     String
+  color                    String                     @db.VarChar(25)
+  methodsOfPayments        MethodOfPayment[]
+  userId                   String
+  transactions             Transaction[]
+  defaultTransactionValues DefaultTransactionValues[]
 }
 
 model MethodOfPayment {
-  id                  Int               @id @default(autoincrement())
-  name                String
-  icon                Icon              @relation(fields: [iconId], references: [id])
-  iconId              Int
-  settlementAccount   SettlementAccount @relation(fields: [settlementAccountId], references: [id])
-  settlementAccountId Int
-  Transaction         Transaction[]
+  id                       Int                        @id @default(autoincrement())
+  name                     String
+  icon                     Icon                       @relation(fields: [iconId], references: [id])
+  iconId                   Int
+  settlementAccount        SettlementAccount          @relation(fields: [settlementAccountId], references: [id])
+  settlementAccountId      Int
+  transactions             Transaction[]
+  defaultTransactionValues DefaultTransactionValues[]
 }
 
 model Transaction {
@@ -154,8 +158,22 @@ model Transaction {
 }
 
 model Currency {
-  id           Int           @id @default(autoincrement())
-  shortName    String
-  name         String
-  transactions Transaction[]
+  id                       Int                        @id @default(autoincrement())
+  shortName                String
+  name                     String
+  transactions             Transaction[]
+  defaultTransactionValues DefaultTransactionValues[]
+}
+
+model DefaultTransactionValues {
+  user                User               @relation(fields: [userId], references: [id])
+  userId              String             @id
+  subcategory         Subcategory?       @relation(fields: [subcategoryId], references: [id])
+  subcategoryId       Int?
+  currency            Currency?          @relation(fields: [currencyId], references: [id])
+  currencyId          Int?
+  settlementAccount   SettlementAccount? @relation(fields: [settlementAccountId], references: [id])
+  settlementAccountId Int?
+  methodOfPayment     MethodOfPayment?   @relation(fields: [methodOfPaymentId], references: [id])
+  methodOfPaymentId   Int?
 }

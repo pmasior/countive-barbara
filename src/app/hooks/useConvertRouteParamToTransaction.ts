@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { convertFastTransactionToTransaction } from "../utils/convertFastTransactionToTransaction/convertFastTransactionToTransaction";
 import { RecognizedField } from "../utils/convertFastTransactionToTransaction/convertFastTransactionToTransaction.types";
 import { useCondensedTransactionFromRouteParam } from "./useCondensedTransactionFromRouteParam";
+import { useFetchMethodOfPayment } from "./useFetchMethodOfPayment";
+import { useFetchSettlementAccount } from "./useFetchSettlementAccount";
 import { useFetchSubcategories } from "./useFetchSubcategories";
 import { useFetchTags } from "./useFetchTags";
 
@@ -13,6 +15,8 @@ export const useConvertRouteParamToTransaction = () => {
 
   const { subcategories } = useFetchSubcategories();
   const { tags } = useFetchTags();
+  const { settlementAccounts } = useFetchSettlementAccount();
+  const { methodOfPayments } = useFetchMethodOfPayment();
 
   useEffect(() => {
     if (!isEmpty(subcategories) && !isEmpty(tags)) {
@@ -20,6 +24,8 @@ export const useConvertRouteParamToTransaction = () => {
         convertFastTransactionToTransaction(condensedTransaction, {
           subcategories,
           tags,
+          settlementAccounts,
+          methodOfPayments,
         });
       setTransaction(transaction);
       setUnprocessabled(unprocessabled);
