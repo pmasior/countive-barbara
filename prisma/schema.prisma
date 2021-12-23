@@ -73,12 +73,13 @@ model Category {
 }
 
 model CategoryBudget {
-  id         Int      @id @default(autoincrement())
-  category   Category @relation(fields: [categoryId], references: [id])
-  categoryId Int
-  amount     Decimal  @db.Decimal(21, 8)
-  since      DateTime @db.Timestamptz(0)
-  until      DateTime @db.Timestamptz(0)
+  id                 Int                 @id @default(autoincrement())
+  category           Category            @relation(fields: [categoryId], references: [id])
+  categoryId         Int
+  amount             Decimal             @db.Decimal(21, 8)
+  since              DateTime            @db.Timestamptz(0)
+  until              DateTime            @db.Timestamptz(0)
+  subcategoryBudgets SubcategoryBudget[]
 }
 
 model Subcategory {
@@ -95,12 +96,12 @@ model Subcategory {
 }
 
 model SubcategoryBudget {
-  id            Int         @id @default(autoincrement())
-  subcategory   Subcategory @relation(fields: [subcategoryId], references: [id])
-  subcategoryId Int
-  amount        Decimal     @db.Decimal(21, 8)
-  since         DateTime    @db.Timestamptz(0)
-  until         DateTime    @db.Timestamptz(0)
+  id               Int            @id @default(autoincrement())
+  subcategory      Subcategory    @relation(fields: [subcategoryId], references: [id])
+  subcategoryId    Int
+  categoryBudget   CategoryBudget @relation(fields: [categoryBudgetId], references: [id])
+  categoryBudgetId Int
+  amount           Decimal        @db.Decimal(21, 8)
 }
 
 model Icon {

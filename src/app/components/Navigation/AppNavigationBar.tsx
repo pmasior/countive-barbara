@@ -1,13 +1,12 @@
-import React, { FC } from "react";
-import { signOut } from "next-auth/react";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import Button from "@mui/material/Button";
-
+import AppBar from "@mui/material/AppBar";
+import IconButton from "@mui/material/IconButton";
+import Toolbar from "@mui/material/Toolbar";
+import React, { FC } from "react";
 import AppLogo from "src/common/components/AppLogo/AppLogo";
+import { BudgetMenu } from "./BudgetMenu";
 import { NavigationTabs } from "./NavigationTabs";
+import { ProfileMenu } from "./ProfileMenu";
 import { SearchField } from "./SearchField";
 
 const AppNavigationBar: FC<{
@@ -29,8 +28,8 @@ const AppNavigationBar: FC<{
           {/* TODO: add flex-grow to AppLogo */}
           <NavigationTabs />
           <SearchField />
-          {/* TODO: make options with signout visible */}
-          <Button onClick={() => signOut()}>Sign out</Button>
+          <BudgetMenu />
+          <ProfileMenu />
         </Toolbar>
       </AppBar>
       <Toolbar />

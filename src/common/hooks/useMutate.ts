@@ -7,11 +7,11 @@ export interface FetchPostReturn {
   text: string;
 }
 
-export const useMutate = (url: string, method: "POST" | "PUT") => {
+export const useMutate = (url: string, method: "POST" | "PUT" | "DELETE") => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const mutate = async <ResponseType = any>(
-    body: any
+    body?: any
   ): Promise<FetchPostReturn> => {
     setLoading(true);
     try {
@@ -27,6 +27,7 @@ export const useMutate = (url: string, method: "POST" | "PUT") => {
     }
   };
 
+  // TODO: is needed to change `body` to `body?`
   const runFetch = async (body: any): Promise<Response> =>
     await fetch(url, {
       body: JSON.stringify(body),

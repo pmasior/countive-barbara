@@ -16,6 +16,11 @@ export const AmountField: FC<{ form: UseFormReturn<FormFieldsNames> }> = ({
       errorText={errors.amount?.message}
       inputProps={register("amount", {
         required: "Amount is required",
+        pattern: {
+          value: /^-?\d+\.?\d*$/,
+          message:
+            "Amount must be a number. It may contain . as a decimal separator.",
+        },
       })}
       label="Amount"
     />

@@ -68,6 +68,15 @@ export const createTransaction = async (
   });
 };
 
+export const removeTransaction = async (email: string, id: number) => {
+  await breakIfUseOtherUserTransactionId(email, id);
+
+  const transaction = await prisma.transaction.delete({
+    where: { id: id },
+    include: { tags: true },
+  });
+};
+
 const breakIfUseOtherUserPropertyIds = async (
   email: string,
   data: Transaction

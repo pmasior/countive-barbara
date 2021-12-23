@@ -33,6 +33,8 @@ describe("convertFastTransactionToTransaction", () => {
         name: "Kraków",
       },
     ],
+    methodOfPayments: [],
+    settlementAccounts: [],
   };
 
   it.each`

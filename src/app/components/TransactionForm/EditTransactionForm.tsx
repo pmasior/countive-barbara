@@ -6,7 +6,7 @@ import { useMutate } from "src/common/hooks/useMutate";
 import TransactionForm from "./TransactionForm";
 
 export const EditTransactionForm: FC<{}> = () => {
-  const transactionId = useRouteParam<number>("transactionId", "number");
+  const transactionId = useRouteParam<number>("editTransaction", "number");
 
   const { transaction } = useFetchTransaction(transactionId);
   const { mutate, loading } = useMutate(

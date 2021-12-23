@@ -21,7 +21,7 @@ const FormFields: FC<FormFieldsProps> = ({
     <form {...formProps}>
       <Box sx={{ display: "grid", gap: 3 }}>
         {textFieldsProps.map((t) => (
-          <TextField key={`form_${t.name}`} {...t} />
+          <TextField key={`form_${t.label}`} {...t} />
         ))}
         {alertText && <Alert severity="error">{alertText}</Alert>}
         <Button

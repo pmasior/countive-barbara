@@ -18,10 +18,10 @@ export const recognizeDate = (inputTransaction: string) =>
   recognizeByRegex(inputTransaction, "date", DATE_REGEX, convertToDate);
 
 const CONVERT_DATE = [
-  { recognizeRegex: String.raw`\d\.\d\.\d{4}`, dateFnsFormat: "d.L.R" },
-  { recognizeRegex: String.raw`\d\d\.\d\.\d{4}`, dateFnsFormat: "dd.L.R" },
-  { recognizeRegex: String.raw`\d\.\d\d\.\d{4}`, dateFnsFormat: "d.LL.R" },
-  { recognizeRegex: String.raw`\d\d\.\d\d\.\d{4}`, dateFnsFormat: "dd.LL.R" },
+  { recognizeRegex: String.raw`\d\.\d\.\d{4}`, dateFnsFormat: "d.L.Y" },
+  { recognizeRegex: String.raw`\d\d\.\d\.\d{4}`, dateFnsFormat: "dd.L.Y" },
+  { recognizeRegex: String.raw`\d\.\d\d\.\d{4}`, dateFnsFormat: "d.LL.Y" },
+  { recognizeRegex: String.raw`\d\d\.\d\d\.\d{4}`, dateFnsFormat: "dd.LL.Y" },
   { recognizeRegex: String.raw`\d\.\d`, dateFnsFormat: "d.L" },
   { recognizeRegex: String.raw`\d\d\.\d`, dateFnsFormat: "dd.L" },
   { recognizeRegex: String.raw`\d\.\d\d`, dateFnsFormat: "d.LL" },

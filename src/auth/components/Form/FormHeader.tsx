@@ -1,8 +1,8 @@
-import React, { FC, ReactNode } from "react";
-import Typography from "@mui/material/Typography";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import Grid from "@mui/material/Grid";
-import Link from "@mui/material/Link";
+import Typography from "@mui/material/Typography";
+import Link from "next/link";
+import React, { FC } from "react";
 
 type FormHeaderProps = {
   title: string;
@@ -13,7 +13,9 @@ const FormHeader: FC<FormHeaderProps> = ({ title }) => {
     <Grid container alignItems="flex-end" columnSpacing={1}>
       <Grid item>
         <Link href="/">
-          <ArrowBackIosRoundedIcon />
+          <a>
+            <ArrowBackIosRoundedIcon />
+          </a>
         </Link>
       </Grid>
       <Grid item>

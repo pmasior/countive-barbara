@@ -2,14 +2,14 @@ import { isEmpty } from "lodash";
 import { useEffect, useState } from "react";
 import { convertFastTransactionToTransaction } from "../utils/convertFastTransactionToTransaction/convertFastTransactionToTransaction";
 import { RecognizedField } from "../utils/convertFastTransactionToTransaction/convertFastTransactionToTransaction.types";
-import { useCondensedTransactionFromRouteParam } from "./useCondensedTransactionFromRouteParam";
 import { useFetchMethodOfPayment } from "./useFetchMethodOfPayment";
 import { useFetchSettlementAccount } from "./useFetchSettlementAccount";
 import { useFetchSubcategories } from "./useFetchSubcategories";
 import { useFetchTags } from "./useFetchTags";
+import { useRouteParam } from "./useRouteParam";
 
 export const useConvertRouteParamToTransaction = () => {
-  const condensedTransaction = useCondensedTransactionFromRouteParam();
+  const condensedTransaction = useRouteParam("addCondensedTransaction");
   const [transaction, setTransaction] = useState<RecognizedField>();
   const [unprocessabled, setUnprocessabled] = useState<string[] | null>();
 

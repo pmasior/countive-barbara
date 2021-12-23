@@ -10,13 +10,16 @@ import {
 } from "@mui/x-data-grid";
 import { useRouter } from "next/router";
 import React, { FC } from "react";
+import { useCategoryIdFromRouteParam } from "src/app/hooks/useCategoryIdFromRouteParam";
 import { useFetchCurrency } from "src/app/hooks/useFetchCurrency";
 import { useFetchSettlementAccount } from "src/app/hooks/useFetchSettlementAccount";
 import { useFetchTags } from "src/app/hooks/useFetchTags";
-import { useFetchTransactions } from "src/app/hooks/useFetchTransaction";
 import { useGenerateMethodOfPayment } from "src/app/hooks/useGenerateMethodOfPayment";
 import { useGenerateSubcategories } from "src/app/hooks/useGenerateSubcategories";
+import { useTransactionsForSubcategoryAndBudget } from "src/app/hooks/useTransactionsForSubcategoryAndBudget";
 import { findRecordById } from "src/app/utils/findRecord";
+import { APP_CATEGORY_URL } from "src/common/constants/urls";
+import { changePathname } from "src/common/utils/url";
 import { MethodOfPaymentCell } from "./MethodOfPaymentCell";
 import { SettlementAccountCell } from "./SettlementAccountCell";
 import { SubcategoryCell } from "./SubcategoryCell";
@@ -24,9 +27,11 @@ import { TagsCell } from "./TagsCell";
 
 const TransactionTable: FC<{}> = () => {
   const router = useRouter();
-
-  const { transactions } = useFetchTransactions();
-  const subcategories = useGenerateSubcategories();
+  const categoryId = useCategoryIdFromRouteParam();
+  const subcategories = useGenerateSubcategories({
+    categoryId,
+  });
+  const transactions = useTransactionsForSubcategoryAndBudget();
   const { settlementAccounts } = useFetchSettlementAccount();
   const { currencies } = useFetchCurrency();
   const methodOfPayments = useGenerateMethodOfPayment();
@@ -42,14 +47,19 @@ const TransactionTable: FC<{}> = () => {
   const getActions = (params: GridRowParams) => [
     <GridActionsCellItem
       onClick={() =>
-        router.push(`${router.asPath}/editTransaction/${params.id}`)
+        changePathname(router, APP_CATEGORY_URL, {
+          editTransaction: params.id,
+        })
       }
       icon={<EditIcon />}
       label="Edit"
     />,
     <GridActionsCellItem
-      // TODO: change onClick
-      onClick={() => console.log(router)}
+      onClick={() =>
+        changePathname(router, APP_CATEGORY_URL, {
+          removeTransaction: params.id,
+        })
+      }
       icon={<DeleteForeverIcon />}
       label="Delete"
     />,

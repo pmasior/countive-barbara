@@ -1,4 +1,3 @@
-import { Transaction } from ".prisma/client";
 import { TransactionWithRelations } from "backend/types/TransactionWithRelations";
 import { API_TRANSACTION_URL } from "src/common/constants/urls";
 import { useFetchSWR } from "src/common/hooks/useFetchSWR";

@@ -1,0 +1,16 @@
+.appLayout {
+  display: grid;
+  grid-template-areas:
+    "header"
+    "main";
+  grid-template-rows: min-content auto;
+  height: 100vh;
+}
+
+.header {
+  grid-area: header;
+}
+
+.main {
+  grid-area: main;
+}

@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getEntityForUserInApi } from "backend/auth/getEntityForUserInApi";
 import {
   getTransaction,
+  removeTransaction,
   updateTransaction,
 } from "backend/repository/transaction";
 
@@ -15,6 +16,9 @@ export const handle = async (req: NextApiRequest, res: NextApiResponse) => {
     }
     case "PUT": {
       return getEntityForUserInApi(req, res, updateTransaction, req.body);
+    }
+    case "DELETE": {
+      return getEntityForUserInApi(req, res, removeTransaction, id);
     }
     default: {
       res.status(405).end();

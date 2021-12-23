@@ -1,43 +1,52 @@
-import React, { FC } from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
-import Link from "@mui/material/Link";
+import IconDisplayer from "@mui/material/Icon";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import IconDisplayer from "@mui/material/Icon";
-import { Category } from ".prisma/client";
-import { Icon } from ".prisma/client";
+import { signOut } from "next-auth/react";
+import { useRouter } from "next/router";
+import React, { FC } from "react";
+import { useGenerateCategories } from "src/app/hooks/useGenerateCategories";
+import { APP_SETTINGS_URL, APP_URL } from "src/common/constants/urls";
 
-import {
-  API_CATEGORY_URL,
-  API_ICON_URL,
-  APP_URL,
-} from "src/common/constants/urls";
-import { useFetchSWR } from "src/common/hooks/useFetchSWR";
-
-export type DrawerElement = Record<"text" | "icon" | "href", string>;
+export type DrawerElement = {
+  icon: string;
+  label: string;
+  onClick: () => void;
+};
 
 const AppNavigationDrawer: FC<{
   openDrawerOnMobile: boolean;
   handleDrawerToggleOnClick: () => void;
 }> = ({ openDrawerOnMobile, handleDrawerToggleOnClick }) => {
-  const { data: categories } = useFetchSWR<Category[]>(API_CATEGORY_URL);
-  const { data: icons } = useFetchSWR<Icon[]>(API_ICON_URL);
+  const router = useRouter();
+  const categories = useGenerateCategories();
 
-  const createDrawerElements = () => {
-    if (categories && icons) {
-      return categories.map((c) => ({
-        text: c.name,
-        icon: icons.find((i) => i.id === c.iconId)?.name || "",
-        href: `${APP_URL}/${c.name.toLowerCase()}`,
-      }));
-    }
-    return [];
+  const changePage = (url: string) => {
+    router.push(url);
+    handleDrawerToggleOnClick();
   };
 
-  const drawerElements: DrawerElement[] = createDrawerElements();
+  // TODO: check if category and icons is empty?
+  const drawerElements: DrawerElement[] = [
+    ...categories.map((c) => ({
+      label: c.name,
+      icon: c.icon?.name || "",
+      onClick: () => changePage(`${APP_URL}/${c.name.toLowerCase()}`),
+    })),
+    {
+      label: "Settings",
+      icon: "settings",
+      onClick: () => changePage(APP_SETTINGS_URL),
+    },
+    {
+      label: "Logout",
+      icon: "logout",
+      onClick: () => signOut(),
+    },
+  ];
 
   return (
     <Box component="nav">
@@ -46,14 +55,13 @@ const AppNavigationDrawer: FC<{
           {drawerElements.map((e) => (
             <ListItem
               button
-              component={Link}
-              key={`appNavigationDrawerElement_${e.text}`}
-              href={e.href}
+              key={`appNavigationDrawerElement_${e.label}`}
+              onClick={e.onClick}
             >
               <ListItemIcon>
                 <IconDisplayer>{e.icon}</IconDisplayer>
               </ListItemIcon>
-              <ListItemText>{e.text}</ListItemText>
+              <ListItemText>{e.label}</ListItemText>
             </ListItem>
           ))}
         </List>

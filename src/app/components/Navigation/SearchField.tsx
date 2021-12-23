@@ -2,6 +2,8 @@ import { TextField } from "@mui/material";
 import { useRouter } from "next/router";
 import { SubmitHandler, useForm } from "react-hook-form";
 import FormFields from "src/auth/components/Form/FormFields";
+import { APP_CATEGORY_URL } from "src/common/constants/urls";
+import { changePathname } from "src/common/utils/url";
 import styles from "./SearchField.module.css";
 
 type FormFields = { condensedTransaction: string };
@@ -11,11 +13,9 @@ export const SearchField = () => {
   const { register, handleSubmit } = useForm<FormFields>();
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
-    router.push(
-      `${router.asPath}/addCondensedTransaction/${encodeURI(
-        data.condensedTransaction
-      )}`
-    );
+    changePathname(router, APP_CATEGORY_URL, {
+      addCondensedTransaction: data.condensedTransaction,
+    });
   };
 
   return (
