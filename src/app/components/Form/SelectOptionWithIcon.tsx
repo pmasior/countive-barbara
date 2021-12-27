@@ -2,13 +2,13 @@ import { Icon } from "@mui/material";
 import React, { FC } from "react";
 
 type IconInMenuItemProps = {
-  color: string;
+  color?: string;
   iconName: string;
   label: string;
 };
 
 export const SelectOptionWithIcon: FC<IconInMenuItemProps> = ({
-  color,
+  color = "inherit",
   iconName,
   label,
 }) => {

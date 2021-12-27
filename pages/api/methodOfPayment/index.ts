@@ -1,7 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { getEntityForUserInApi } from "backend/auth/getEntityForUserInApi";
-import { getMethodOfPayment } from "backend/repository/methodOfPayment";
+import {
+  createMethodOfPayment,
+  getMethodOfPayment,
+} from "backend/repository/methodOfPayment";
 
 export const handle = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
@@ -9,7 +12,7 @@ export const handle = async (req: NextApiRequest, res: NextApiResponse) => {
       return getEntityForUserInApi(req, res, getMethodOfPayment);
     }
     case "POST": {
-      // return getEntityForUserInApi(req, res, createTransaction, req.body);
+      return getEntityForUserInApi(req, res, createMethodOfPayment, req.body);
       return;
     }
     default: {

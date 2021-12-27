@@ -5,6 +5,7 @@ import { useFetchIcons } from "./useFetchIcons";
 import { useFetchSubcategories } from "./useFetchSubcategories";
 
 type Filter = {
+  id?: number;
   categoryId?: number;
 };
 
@@ -16,6 +17,9 @@ export const useGenerateSubcategories = (filter?: Filter) => {
   let filtered: Subcategory[] = subcategories;
 
   if (subcategories && filter) {
+    if (filter.id) {
+      filtered = filtered.filter((t) => t.id === filter.id);
+    }
     if (filter.categoryId) {
       filtered = filtered.filter((t) => t.categoryId === filter.categoryId);
     }

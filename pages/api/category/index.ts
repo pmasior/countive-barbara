@@ -1,10 +1,20 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { getEntityForUserInApi } from "backend/auth/getEntityForUserInApi";
-import { getCategory } from "backend/repository/category";
+import { createCategory, getCategories } from "backend/repository/category";
 
 export const handle = async (req: NextApiRequest, res: NextApiResponse) => {
-  return getEntityForUserInApi(req, res, getCategory);
+  switch (req.method) {
+    case "GET": {
+      return getEntityForUserInApi(req, res, getCategories);
+    }
+    case "POST": {
+      return getEntityForUserInApi(req, res, createCategory, req.body);
+    }
+    default: {
+      res.status(405).end();
+    }
+  }
 };
 
 export default handle;

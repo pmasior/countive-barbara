@@ -1,5 +1,5 @@
 import { getEntityForUserInSSR } from "backend/auth/getEntityForUserInSSR";
-import { getCategory } from "backend/repository/category";
+import { getCategories } from "backend/repository/category";
 import { getIcon } from "backend/repository/icon";
 import { getSubcategoryForCategory } from "backend/repository/subcategory";
 import { getTransactions } from "backend/repository/transaction";
@@ -15,7 +15,7 @@ import {
 export const getFallbackForApp = async <T extends ParsedUrlQuery>(
   context: GetServerSidePropsContext<T>
 ) => {
-  const categories = await getEntityForUserInSSR(context, getCategory);
+  const categories = await getEntityForUserInSSR(context, getCategories);
   const categoryFromParams = context.params?.category;
   const subcategories = await getEntityForUserInSSR(
     context,

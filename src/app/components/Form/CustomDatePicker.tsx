@@ -12,30 +12,28 @@ import {
   UseFormSetValue,
   useWatch,
 } from "react-hook-form";
-import { FormFieldsNames } from "../TransactionForm/TransactionForm";
 
 type ReactHookFormDatePickerProps<TFormFieldsNames> = {
   registerReturn: UseFormRegisterReturn;
   control: Control<TFormFieldsNames, object>;
   setValue: UseFormSetValue<TFormFieldsNames>;
-  setError: UseFormSetError<FormFieldsNames>;
+  setError: UseFormSetError<TFormFieldsNames>;
   clearErrors: UseFormClearErrors<TFormFieldsNames>;
 };
 
-type CustomDatePickerProps = {
+type CustomDatePickerProps<TFormFieldsNames> = {
   errorText?: string | undefined;
   label: string;
-  name: keyof FormFieldsNames;
-  reactHookFormProps: ReactHookFormDatePickerProps<FormFieldsNames>;
+  name: keyof TFormFieldsNames;
+  reactHookFormProps: ReactHookFormDatePickerProps<TFormFieldsNames>;
 };
 
-// TODO: remove using FormFieldsNames from TransactionForm
-export const CustomDatePicker: FC<CustomDatePickerProps> = ({
+export const CustomDatePicker = <T extends {}>({
   errorText,
   label,
   name,
   reactHookFormProps,
-}) => {
+}: CustomDatePickerProps<T>) => {
   const { control, setValue, setError, clearErrors } = reactHookFormProps;
   const watchDateValue = useWatch({ name, control });
 

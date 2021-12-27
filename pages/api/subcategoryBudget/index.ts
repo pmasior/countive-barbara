@@ -1,9 +1,22 @@
 import { getEntityForUserInApi } from "backend/auth/getEntityForUserInApi";
-import { getSubcategoryBudget } from "backend/repository/subcategoryBudget";
+import {
+  createSubcategoryBudget,
+  getSubcategoryBudgets,
+} from "backend/repository/subcategoryBudget";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export const handle = async (req: NextApiRequest, res: NextApiResponse) => {
-  return getEntityForUserInApi(req, res, getSubcategoryBudget);
+  switch (req.method) {
+    case "GET": {
+      return getEntityForUserInApi(req, res, getSubcategoryBudgets);
+    }
+    case "POST": {
+      return getEntityForUserInApi(req, res, createSubcategoryBudget, req.body);
+    }
+    default: {
+      res.status(405).end();
+    }
+  }
 };
 
 export default handle;

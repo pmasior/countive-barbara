@@ -1,4 +1,6 @@
 import { CategoryBudget } from ".prisma/client";
+import { mapCategoryBudgetsToNested } from "../utils/entitiesMapper/mapCategoryBudgets";
+import { useFetchCategories } from "./useFetchCategories";
 import { useFetchCategoryBudgets } from "./useFetchCategoryBudget";
 
 export type CategoryBudgetFilter = {
@@ -10,6 +12,7 @@ export type CategoryBudgetFilter = {
 
 export const useGenerateCategoryBudget = (filter?: CategoryBudgetFilter) => {
   const { categoryBudgets } = useFetchCategoryBudgets();
+  const { categories } = useFetchCategories();
 
   let filtered: CategoryBudget[] = categoryBudgets;
 
@@ -30,7 +33,8 @@ export const useGenerateCategoryBudget = (filter?: CategoryBudgetFilter) => {
         (c) => filter.until && filter.until(new Date(c.until))
       );
     }
-    return filtered;
   }
-  return categoryBudgets ? categoryBudgets : [];
+  return categories && categoryBudgets
+    ? mapCategoryBudgetsToNested({ categoryBudgets: filtered, categories })
+    : [];
 };
