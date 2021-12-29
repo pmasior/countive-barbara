@@ -1,12 +1,13 @@
+import { SelectProps } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import React, { FC, ReactNode } from "react";
-import { UseFormGetValues, UseFormRegisterReturn } from "react-hook-form";
-import { FormFieldsNames } from "../TransactionForm/TransactionForm";
+import { UseFormRegisterReturn } from "react-hook-form";
 
 type CustomSelectInputProps = {
   errorText?: string | undefined;
   defaultValue?: string | number | Date;
+  SelectProps?: SelectProps;
   inputProps: UseFormRegisterReturn;
   label: string;
   options: Option[];
@@ -20,6 +21,7 @@ type Option = {
 export const CustomSelectInput: FC<CustomSelectInputProps> = ({
   errorText = null,
   inputProps,
+  SelectProps,
   defaultValue,
   label,
   options,
@@ -27,7 +29,7 @@ export const CustomSelectInput: FC<CustomSelectInputProps> = ({
   return (
     <TextField
       select
-      SelectProps={inputProps}
+      SelectProps={SelectProps}
       defaultValue={defaultValue}
       inputProps={inputProps}
       label={label}

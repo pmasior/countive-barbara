@@ -20,6 +20,22 @@ export const SettingsDashboard = () => {
   return (
     <Grid container spacing={4} padding={4}>
       <Grid item xs={12}>
+        <Stack direction="column" alignItems="flex-start">
+          <Typography component="h2" variant="h5" gutterBottom>
+            Default values
+          </Typography>
+          <Button
+            onClick={() =>
+              changePathname(router, APP_SETTINGS_URL, {
+                editDefaultTransactionValues: true,
+              })
+            }
+          >
+            Edit Default Transaction Values
+          </Button>
+        </Stack>
+      </Grid>
+      <Grid item xs={12}>
         <Stack direction="row" justifyContent="space-between">
           <Typography component="h2" variant="h5" gutterBottom>
             Categories

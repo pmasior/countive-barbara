@@ -8,6 +8,7 @@ import RemoveCategoryBudgetForm from "../components/CategoryBudgetForm/RemoveCat
 import AddCategoryForm from "../components/CategoryForm/AddCategoryForm";
 import EditCategoryForm from "../components/CategoryForm/EditCategoryForm";
 import RemoveCategoryForm from "../components/CategoryForm/RemoveCategoryForm";
+import EditDefaultTransactionValuesForm from "../components/DefaultTransactionValuesForm/EditDefaultTransactionValuesForm";
 import AddMethodOfPaymentForm from "../components/MethodOfPaymentForm/AddMethodOfPaymentForm";
 import EditMethodOfPaymentForm from "../components/MethodOfPaymentForm/EditMethodOfPaymentForm";
 import RemoveMethodOfPaymentForm from "../components/MethodOfPaymentForm/RemoveMethodOfPaymentForm";
@@ -33,6 +34,9 @@ const Settings: FC<{}> = () => {
   return (
     <AppLayout>
       <SettingsDashboard />
+      {isQueryExist(router.query?.editDefaultTransactionValues) && (
+        <EditDefaultTransactionValuesForm />
+      )}
       {isQueryExist(router.query?.addCategory) && <AddCategoryForm />}
       {isQueryExist(router.query?.editCategory) && <EditCategoryForm />}
       {isQueryExist(router.query?.removeCategory) && <RemoveCategoryForm />}
