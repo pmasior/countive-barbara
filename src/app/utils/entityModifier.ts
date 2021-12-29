@@ -44,34 +44,3 @@ export const filterTransactionsByCategory = (
     subcategoriesForCategory.some((s) => s.id === t.subcategoryId)
   );
 };
-
-// const findRecordById = <T = { id: number }>(
-//   records: T[],
-//   id: number
-// ): T | undefined => records.find((r) => r.id === id);
-
-// export const get = <T, K extends keyof T>(
-//   sourceEntity: T,
-//   location: K[],
-//   records: any[]
-// ) => {
-
-export const get = <T, K extends keyof T, L>(
-  sourceEntity: T,
-  location: K[],
-  records: L[]
-) => {
-  let currentEntity = sourceEntity;
-  let id: T[K];
-  for (let i = 0; i < records.length; i++) {
-    id = currentEntity[location[i]];
-    currentEntity = records[i].find((r: { id: T[K] }) => r.id === id);
-  }
-  if (location.length === records.length) {
-    return currentEntity;
-  } else if (location.length === records.length + 1) {
-    return currentEntity[location[location.length - 1]];
-  } else {
-    throw new Error("Incorrect location.length or records.length");
-  }
-};
