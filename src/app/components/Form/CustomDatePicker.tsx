@@ -1,11 +1,12 @@
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import deLocale from "date-fns/locale/de";
 import DatePicker from "@mui/lab/DatePicker";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import React, { FC } from "react";
 import TextField, { TextFieldProps } from "@mui/material/TextField";
+import deLocale from "date-fns/locale/de";
+import React from "react";
 import {
   Control,
+  Path,
   UseFormClearErrors,
   UseFormRegisterReturn,
   UseFormSetError,
@@ -24,7 +25,7 @@ type ReactHookFormDatePickerProps<TFormFieldsNames> = {
 type CustomDatePickerProps<TFormFieldsNames> = {
   errorText?: string | undefined;
   label: string;
-  name: keyof TFormFieldsNames;
+  name: Path<TFormFieldsNames>;
   reactHookFormProps: ReactHookFormDatePickerProps<TFormFieldsNames>;
 };
 
@@ -35,7 +36,7 @@ export const CustomDatePicker = <T extends {}>({
   reactHookFormProps,
 }: CustomDatePickerProps<T>) => {
   const { control, setValue, setError, clearErrors } = reactHookFormProps;
-  const watchDateValue = useWatch({ name, control });
+  const watchDateValue = useWatch<T>({ control, name });
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns} locale={deLocale}>
