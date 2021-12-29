@@ -17,6 +17,7 @@ import Body from "src/app/layouts/Category";
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const categories = await getEntityForUserInSSR(context, getCategories);
   const icons = await getIcon();
+  console.log(process.env);
   return {
     props: {
       fallback: {
