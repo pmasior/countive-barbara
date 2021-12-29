@@ -17,8 +17,6 @@ export const ProfileMenu: FC<{}> = () => {
     closeMenu();
   };
 
-  console.log(router);
-
   return (
     <>
       <IconButton {...menuControlsProps}>
