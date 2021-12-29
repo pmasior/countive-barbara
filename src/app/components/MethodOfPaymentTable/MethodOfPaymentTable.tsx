@@ -3,7 +3,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import {
   DataGrid,
   GridActionsCellItem,
-  GridColDef,
+  GridEnrichedColDef,
   GridRowParams,
   GridValueGetterParams,
 } from "@mui/x-data-grid";
@@ -52,7 +52,7 @@ const MethodOfPaymentTable: FC<{}> = () => {
     />,
   ];
 
-  const columns: GridColDef[] = [
+  const columns: GridEnrichedColDef[] = [
     {
       field: "iconId",
       headerName: "Icon",
@@ -69,7 +69,6 @@ const MethodOfPaymentTable: FC<{}> = () => {
       valueGetter: getSettlementAccount,
       flex: 1,
     },
-    // TODO: fix TS error
     { field: "actions", type: "actions", getActions: getActions },
   ];
 

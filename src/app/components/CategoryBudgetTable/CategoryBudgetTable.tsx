@@ -3,7 +3,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import {
   DataGrid,
   GridActionsCellItem,
-  GridColDef,
+  GridEnrichedColDef,
   GridRowParams,
   GridValueGetterParams,
 } from "@mui/x-data-grid";
@@ -43,7 +43,7 @@ const CategoryBudgetTable: FC<{}> = () => {
     />,
   ];
 
-  const columns: GridColDef[] = [
+  const columns: GridEnrichedColDef[] = [
     {
       field: "categoryId",
       headerName: "Category",
@@ -66,7 +66,6 @@ const CategoryBudgetTable: FC<{}> = () => {
       flex: 1,
     },
     { field: "amount", headerName: "Amount", flex: 1 },
-    // TODO: fix TS error
     { field: "actions", type: "actions", getActions: getActions },
   ];
 

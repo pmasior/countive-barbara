@@ -3,7 +3,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import {
   DataGrid,
   GridActionsCellItem,
-  GridColDef,
+  GridEnrichedColDef,
   GridRowParams,
 } from "@mui/x-data-grid";
 import { useRouter } from "next/router";
@@ -43,7 +43,7 @@ const SubcategoryTable: FC<{}> = () => {
     />,
   ];
 
-  const columns: GridColDef[] = [
+  const columns: GridEnrichedColDef[] = [
     {
       field: "iconId",
       headerName: "Icon",
@@ -61,7 +61,6 @@ const SubcategoryTable: FC<{}> = () => {
       flex: 1,
     },
     { field: "color", headerName: "Color", flex: 1 },
-    // TODO: fix TS error
     { field: "actions", type: "actions", getActions: getActions },
   ];
 

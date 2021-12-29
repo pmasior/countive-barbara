@@ -3,7 +3,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import {
   DataGrid,
   GridActionsCellItem,
-  GridColDef,
+  GridEnrichedColDef,
   GridRowParams,
   GridToolbar,
   GridValueGetterParams,
@@ -65,7 +65,7 @@ const TransactionTable: FC<{}> = () => {
     />,
   ];
 
-  const columns: GridColDef[] = [
+  const columns: GridEnrichedColDef[] = [
     {
       field: "addedAt",
       headerName: "Date",
@@ -112,7 +112,6 @@ const TransactionTable: FC<{}> = () => {
       width: 160,
     },
     { field: "amount", hide: true },
-    // TODO: fix TS error
     { field: "actions", type: "actions", getActions: getActions },
   ];
 

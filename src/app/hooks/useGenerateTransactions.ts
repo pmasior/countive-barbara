@@ -20,8 +20,7 @@ export const useGenerateTransactions = (filter?: Filter) => {
         );
       } else if (isArray(filter.subcategoryId)) {
         filtered = filtered.filter((t) =>
-          // TODO: fix TS error (includes)?
-          filter.subcategoryId?.includes(t.subcategoryId)
+          (filter.subcategoryId as number[])?.includes(t.subcategoryId)
         );
       }
     }

@@ -3,7 +3,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import {
   DataGrid,
   GridActionsCellItem,
-  GridColDef,
+  GridEnrichedColDef,
   GridRowParams,
 } from "@mui/x-data-grid";
 import { useRouter } from "next/router";
@@ -40,7 +40,7 @@ const TagTable: FC<{}> = () => {
     />,
   ];
 
-  const columns: GridColDef[] = [
+  const columns: GridEnrichedColDef[] = [
     { field: "name", headerName: "Name", flex: 1 },
     {
       field: "categoryId",
@@ -49,7 +49,6 @@ const TagTable: FC<{}> = () => {
       renderCell: CategoryCell(categories),
       flex: 1,
     },
-    // TODO: fix TS error
     { field: "actions", type: "actions", getActions: getActions },
   ];
 
