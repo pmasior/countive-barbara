@@ -2,14 +2,14 @@ import React, { FC } from "react";
 import Grid from "@mui/material/Grid";
 
 import SubcategoryCard from "./SubcategoryCard";
-import { SubcategorySummary } from "./SubcategoryCard";
+import { useGenerateSubcategorySummary } from "src/app/hooks/useGenerateSubcategorySummary";
 
-const SubcategoryGrid: FC<{ subcategories: SubcategorySummary[] }> = ({
-  subcategories,
-}) => {
+const SubcategoryGrid: FC<{}> = () => {
+  const subcategorySummary = useGenerateSubcategorySummary();
+
   return (
-    <Grid container spacing={1} xs={4}>
-      {subcategories.map((s) => (
+    <Grid container spacing={1}>
+      {subcategorySummary.map((s) => (
         <Grid item xs={4} key={`subcategoryCard_${s.name}`}>
           <SubcategoryCard {...s} />
         </Grid>

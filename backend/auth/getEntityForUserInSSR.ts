@@ -10,11 +10,12 @@ import { getEmailForSession } from "./getEmailForSession";
  */
 export const getEntityForUserInSSR = async <Type>(
   context: GetSessionParams,
-  getEntity: (userEmailForSession: string) => Type
+  getEntity: (userEmailForSession: string, ...queryParams: any[]) => Type,
+  ...queryParams: any[]
 ) => {
   const userEmailForSession = await getEmailForSession(context);
   if (userEmailForSession) {
-    return await getEntity(userEmailForSession);
+    return await getEntity(userEmailForSession, ...queryParams);
   } else {
     return [];
   }

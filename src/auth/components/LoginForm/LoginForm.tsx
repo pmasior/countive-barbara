@@ -11,7 +11,7 @@ import { APP_URL } from "src/common/constants/urls";
 
 const LoginForm: FC<{}> = () => {
   const router = useRouter();
-  const [alertText, setAlertText] = useState<string>("");
+  const [alertText, setAlertText] = useState<string | null>(null);
   const { register, handleSubmit } = useForm<FormFieldsNames>();
 
   const onSubmit: SubmitHandler<FormFieldsNames> = async (data, e) => {
@@ -22,6 +22,7 @@ const LoginForm: FC<{}> = () => {
     if (signInResult?.["error"]) {
       setAlertText(signInResult["error"]);
     } else if (signInResult?.["ok"]) {
+      setAlertText(null);
       router.push(APP_URL);
     }
   };
