@@ -28,7 +28,7 @@ type TransactionFormProps = {
   mutate: (body: any) => Promise<FetchPostReturn>;
 };
 
-export const TransactionForm: FC<TransactionFormProps> = ({
+export const DefaultTransactionValuesForm: FC<TransactionFormProps> = ({
   defaultValues,
   mutate,
 }) => {
@@ -61,7 +61,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
 
   return (
     <Dialog open={true} onBackdropClick={closeModal}>
-      <DialogTitle>Add transaction</DialogTitle>
+      <DialogTitle>Edit default transaction values</DialogTitle>
       <DialogContent>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={3}>
@@ -93,4 +93,4 @@ export const TransactionForm: FC<TransactionFormProps> = ({
   );
 };
 
-export default TransactionForm;
+export default DefaultTransactionValuesForm;

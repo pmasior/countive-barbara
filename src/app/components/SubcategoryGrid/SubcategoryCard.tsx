@@ -12,6 +12,7 @@ export type SubcategorySummary = {
   id: number;
   name: string;
   amount: string;
+  remainAmount: string;
   currency: string;
   icon: string;
   color?: string;
@@ -21,6 +22,7 @@ const SubcategoryCard: FC<SubcategorySummary> = ({
   id,
   name,
   amount,
+  remainAmount,
   currency,
   icon,
   color = "initial",
@@ -53,6 +55,13 @@ const SubcategoryCard: FC<SubcategorySummary> = ({
           <Typography component="div" variant="body2" color={color}>
             {name}
           </Typography>
+          {remainAmount && (
+            <Typography component="div" variant="body2" color="text.primary">
+              <strong>
+                {remainAmount} {currency}
+              </strong>
+            </Typography>
+          )}
           <Typography component="div" variant="body2" color="text.primary">
             {amount} {currency}
           </Typography>

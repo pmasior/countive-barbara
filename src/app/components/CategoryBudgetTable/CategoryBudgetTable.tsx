@@ -65,7 +65,7 @@ const CategoryBudgetTable: FC<{}> = () => {
       valueGetter: getDate,
       flex: 1,
     },
-    { field: "amount", flex: 1 },
+    { field: "amount", headerName: "Amount", flex: 1 },
     // TODO: fix TS error
     { field: "actions", type: "actions", getActions: getActions },
   ];
