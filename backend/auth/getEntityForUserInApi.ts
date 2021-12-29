@@ -26,6 +26,6 @@ export const getEntityForUserInApi = async <Type>(
     }
     res.json(result);
   } else {
-    res.status(401).end();
+    res.status(402).end();
   }
 };
