@@ -9,7 +9,9 @@ import Grid from "@mui/material/Grid";
 import { useRouter } from "next/router";
 import React, { FC, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { API_TRANSACTION_URL } from "src/common/constants/urls";
 import { FetchPostReturn } from "src/common/hooks/useMutate";
+import { useSWRConfig } from "swr";
 import { AddedAtField } from "./AddedAtField";
 import { AmountField } from "./AmountField";
 import { CurrencyField } from "./CurrencyField";
@@ -43,6 +45,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
 }) => {
   const [alertText, setAlertText] = useState<string | null>(null);
   const router = useRouter();
+  const { mutate: mutateSWR } = useSWRConfig();
   const form = useForm<FormFieldsNames>({
     defaultValues: {
       subcategoryId: "",
@@ -60,6 +63,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
       setAlertText(json?.message || text);
     } else {
       setAlertText(null);
+      mutateSWR(API_TRANSACTION_URL);
       closeModal();
     }
   };
