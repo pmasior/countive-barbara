@@ -22,6 +22,9 @@ import RemoveSubcategoryBudgetForm from "../components/SubcategoryBudgetForm/Rem
 import AddSubcategoryForm from "../components/SubcategoryForm/AddSubcategoryForm";
 import EditSubcategoryForm from "../components/SubcategoryForm/EditSubcategoryForm";
 import RemoveSubcategoryForm from "../components/SubcategoryForm/RemoveSubcategoryForm";
+import AddTagForm from "../components/TagForm/AddTagForm";
+import EditTagForm from "../components/TagForm/EditTagForm";
+import RemoveTagForm from "../components/TagForm/RemoveTagForm";
 
 const Settings: FC<{}> = () => {
   useSession({ required: true });
@@ -56,6 +59,9 @@ const Settings: FC<{}> = () => {
       {isQueryExist(router.query?.removeSubcategoryBudget) && (
         <RemoveSubcategoryBudgetForm />
       )}
+      {isQueryExist(router.query?.addTag) && <AddTagForm />}
+      {isQueryExist(router.query?.editTag) && <EditTagForm />}
+      {isQueryExist(router.query?.removeTag) && <RemoveTagForm />}
       {isQueryExist(router.query?.addSettlementAccount) && (
         <AddSettlementAccountForm />
       )}

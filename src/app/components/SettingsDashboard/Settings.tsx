@@ -12,6 +12,7 @@ import MethodOfPaymentTable from "../MethodOfPaymentTable/MethodOfPaymentTable";
 import SettlementAccountTable from "../SettlementAccountTable/SettlementAccountTable";
 import SubcategoryBudgetTable from "../SubcategoryBudgetTable/SubcategoryBudgetTable";
 import SubcategoryTable from "../SubcategoryTable/SubcategoryTable";
+import TagTable from "../TagTable/TagTable";
 
 export const SettingsDashboard = () => {
   const router = useRouter();
@@ -49,6 +50,23 @@ export const SettingsDashboard = () => {
           </Button>
         </Stack>
         <SubcategoryTable />
+      </Grid>
+      <Grid item xs={12}>
+        <Stack direction="row" justifyContent="space-between">
+          <Typography component="h2" variant="h5" gutterBottom>
+            Tags
+          </Typography>
+          <Button
+            onClick={() =>
+              changePathname(router, APP_SETTINGS_URL, {
+                addTag: true,
+              })
+            }
+          >
+            Add
+          </Button>
+        </Stack>
+        <TagTable />
       </Grid>
       <Grid item xs={12}>
         <Stack direction="row" justifyContent="space-between">
@@ -104,7 +122,7 @@ export const SettingsDashboard = () => {
       <Grid item xs={12}>
         <Stack direction="row" justifyContent="space-between">
           <Typography component="h2" variant="h5" gutterBottom>
-            Method Of Paymentts
+            Method Of Payments
           </Typography>
           <Button
             onClick={() =>
