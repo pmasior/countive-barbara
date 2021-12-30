@@ -13,9 +13,12 @@ export const useGenerateSubcategorySummary = () => {
   const subcategoryBudgets = useGenerateSubcategoryBudget({
     categoryBudgetId: categoryBudget?.id,
   });
+  const transactionAddedAt = categoryBudget
+    ? (date: Date) =>
+        isDateBetween(date, categoryBudget.since, categoryBudget.until)
+    : undefined;
   const transactions = useGenerateTransactions({
-    addedAt: (date: Date) =>
-      isDateBetween(date, categoryBudget.since, categoryBudget.until),
+    addedAt: transactionAddedAt,
   });
 
   const countRemainingBudget = (
