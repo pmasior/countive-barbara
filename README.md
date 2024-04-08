@@ -32,5 +32,5 @@ docker run \
   -v ./package.json:/app/package.json \
   -v ./package-lock.json:/app/package-lock.json \
   --workdir /app \
-  node:18 npm install
+  node:18 npm update
 ```
