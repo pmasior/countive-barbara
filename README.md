@@ -34,3 +34,26 @@ docker run \
   --workdir /app \
   node:18 npm update
 ```
+
+## Run command in running container
+
+```bash
+docker exec -it countive-docker-application bash
+ls
+```
+
+## Create new next.js project
+
+```bash
+mkdir tempprojectname
+cd tempprojectname
+docker run \
+  -it --name tempprojectname \
+  -v ./:/app \
+  -v tempprojectname_next_distribution:/app/.next \
+  -v tempprojectname_node_modules:/app/node_modules \
+  --workdir /app \
+  node:18 bash
+npx create-next-app@latest .
+npm init jest@latest
+```
