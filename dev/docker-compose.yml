@@ -29,10 +29,10 @@ services:
         source: ../application
         target: /app
       - type: volume
-        source: next_distribution
+        source: countive-docker-dev-next_distribution-volume
         target: /app/.next
       - type: volume
-        source: node_modules
+        source: countive-docker-dev-node_modules-volume
         target: /app/node_modules
   database:
     container_name: countive-docker-dev-database
@@ -55,13 +55,14 @@ services:
       - "5432:5432"
     restart: on-failure:1
     volumes:
-      - type: bind
-        source: ../database
+      - type: volume
+        source: countive-docker-dev-postgres_data-volume
         target: /var/lib/postgres/data
 
 networks:
   countive-docker-dev-network:
 
 volumes:
-  node_modules:
-  next_distribution:
+  countive-docker-dev-node_modules-volume:
+  countive-docker-dev-next_distribution-volume:
+  countive-docker-dev-postgres_data-volume:
