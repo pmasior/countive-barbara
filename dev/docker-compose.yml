@@ -24,7 +24,6 @@ services:
     networks:
       - countive-docker-dev-network
     ports:
-      - "3000:3000"
       - "3003:3003"
     restart: on-failure:1
     volumes:
@@ -55,7 +54,7 @@ services:
     networks:
       - countive-docker-dev-network
     ports:
-      - "5432:5432"
+      - "5433:5432"
     restart: on-failure:1
     volumes:
       - type: volume

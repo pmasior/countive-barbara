@@ -15,6 +15,8 @@ docker compose stop
 docker compose up
 ```
 
+Open [localhost:3003](http://localhost:3003)
+
 ## Run prod build
 
 ```bash
@@ -27,6 +29,8 @@ docker compose --profile seed run seed
 docker compose stop
 docker compose up
 ```
+
+Open [localhost:3001](http://localhost:3001)
 
 ## Update dependencies
 
