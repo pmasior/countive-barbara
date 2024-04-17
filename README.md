@@ -11,7 +11,7 @@ nano .env
 docker compose build
 docker compose --profile migrate run migrate
 docker compose --profile seed run seed
-docker compose down
+docker compose stop
 docker compose up
 ```
 
@@ -24,7 +24,7 @@ nano .env
 docker compose build
 docker compose --profile migrate run migrate
 docker compose --profile seed run seed
-docker compose down
+docker compose stop
 docker compose up
 ```
 
