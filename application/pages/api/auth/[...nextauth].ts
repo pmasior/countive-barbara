@@ -41,7 +41,7 @@ const nextAuthOptions = {
   ],
   secret: process.env.NEXT_AUTH_JS_SECRET,
   session: {
-    jwt: true,
+    strategy: "jwt",
   },
   jwt: {
     encryption: true,
