@@ -9,6 +9,7 @@ git clone https://github.com/pmasior/countive.git
 cd countive/dev
 nano .env
 docker compose build
+docker compose run migrate
 docker compose up
 ```
 
@@ -19,6 +20,7 @@ git clone https://github.com/pmasior/countive.git
 cd countive/prod
 nano .env
 docker compose build
+docker compose run migrate
 docker compose up
 ```
 

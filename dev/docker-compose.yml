@@ -4,14 +4,16 @@ services:
       context: ../application
       dockerfile: application.dev.Dockerfile
     container_name: countive-docker-dev-application
+    depends_on:
+      - database
     deploy:
       resources:
         limits:
           cpus: "2"
-          memory: "1GB"
+          memory: "2GB"
         reservations:
           cpus: "0.5"
-          memory: "500M"
+          memory: "1G"
     environment:
       DATABASE_URI: ${DATABASE_URI}
       NEXTAUTH_URL: ${NEXTAUTH_URL}
@@ -58,6 +60,25 @@ services:
       - type: volume
         source: countive-docker-dev-postgres_data-volume
         target: /var/lib/postgres/data
+  migrate:
+    build:
+      context: ../application
+      dockerfile: application.dev.Dockerfile
+    command: ["npx", "prisma", "migrate", "dev"]
+    container_name: countive-docker-dev-migrate
+    depends_on:
+      - database
+    environment:
+      DATABASE_URI: ${DATABASE_URI}
+    networks:
+      - countive-docker-dev-network
+    volumes:
+      - type: bind
+        source: ../application/prisma
+        target: /app/prisma
+      - type: volume
+        source: countive-docker-dev-node_modules-volume
+        target: /app/node_modules
 
 networks:
   countive-docker-dev-network:
