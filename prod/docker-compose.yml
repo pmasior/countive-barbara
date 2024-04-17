@@ -66,6 +66,29 @@ services:
       DATABASE_URI: ${DATABASE_URI}
     networks:
       - countive-docker-network
+    profiles:
+      - migrate
+    volumes:
+      - type: bind
+        source: ../application/prisma
+        target: /app/prisma
+      - type: volume
+        source: countive-docker-node_modules-volume
+        target: /app/node_modules
+  seed:
+    build:
+      context: ../application
+      dockerfile: application.prod.Dockerfile
+    command: ["npx", "prisma", "db", "seed"]
+    container_name: countive-docker-seed
+    depends_on:
+      - database
+    environment:
+      DATABASE_URI: ${DATABASE_URI}
+    networks:
+      - countive-docker-network
+    profiles:
+      - seed
     volumes:
       - type: bind
         source: ../application/prisma
