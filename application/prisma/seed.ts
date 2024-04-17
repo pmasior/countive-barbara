@@ -43,10 +43,13 @@ const createIconInDatabase = async () => {
    */
   const convertToArrayPassedToDatabase = (codepoints: string) => {
     const iconLinesFromFile = codepoints.split("\n");
-    return iconLinesFromFile.map((i) => {
-      const iconName = i.split(" ")[0];
-      return { name: iconName };
-    });
+    const iconNamesWithDuplicates = iconLinesFromFile.map(
+      (i) => i.split(" ")[0]
+    );
+    const iconNamesWithoutDuplicates = Array.from(
+      new Set(iconNamesWithDuplicates)
+    );
+    return iconNamesWithoutDuplicates.map((i) => ({ name: i }));
   };
 
   /**
