@@ -1,34 +1,69 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# countive
 
-## Getting Started
+A simple web application to manage personal budget
 
-First, run the development server:
+## Run dev build
 
 ```bash
-npm run dev
-# or
-yarn dev
+git clone https://github.com/pmasior/countive.git
+cd countive/dev
+nano .env
+docker compose build
+docker compose --profile migrate run migrate
+docker compose --profile seed run seed
+docker compose stop
+docker compose up
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [localhost:3003](http://localhost:3003)
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Run prod build
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+```bash
+git clone https://github.com/pmasior/countive.git
+cd countive/prod
+nano .env
+docker compose build
+docker compose --profile migrate run migrate
+docker compose --profile seed run seed
+docker compose stop
+docker compose up
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Open [localhost:3001](http://localhost:3001)
 
-## Learn More
+## Update dependencies
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+git clone https://github.com/pmasior/countive.git
+cd countive/application
+docker run \
+  -it --rm \
+  -v ./package.json:/app/package.json \
+  -v ./package-lock.json:/app/package-lock.json \
+  --workdir /app \
+  node:18 npm update
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Run command in running container
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```bash
+docker exec -it countive-docker-application bash
+ls
+```
 
-## Deploy on Vercel
+## Create new next.js project
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```bash
+mkdir tempprojectname
+cd tempprojectname
+docker run \
+  -it --name tempprojectname \
+  -v ./:/app \
+  -v tempprojectname_next_distribution:/app/.next \
+  -v tempprojectname_node_modules:/app/node_modules \
+  --workdir /app \
+  node:18 bash
+npx create-next-app@latest .
+npm init jest@latest
+```

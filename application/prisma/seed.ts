@@ -43,10 +43,13 @@ const createIconInDatabase = async () => {
    */
   const convertToArrayPassedToDatabase = (codepoints: string) => {
     const iconLinesFromFile = codepoints.split("\n");
-    return iconLinesFromFile.map((i) => {
-      const iconName = i.split(" ")[0];
-      return { name: iconName };
-    });
+    const iconNamesWithDuplicates = iconLinesFromFile.map(
+      (i) => i.split(" ")[0]
+    );
+    const iconNamesWithoutDuplicates = Array.from(
+      new Set(iconNamesWithDuplicates)
+    );
+    return iconNamesWithoutDuplicates.map((i) => ({ name: i }));
   };
 
   /**
@@ -66,10 +69,35 @@ const createIconInDatabase = async () => {
 };
 
 /**
+ * Create records for Currency table in database
+ */
+const createCurrencyInDatabase = async () => {
+  /**
+   * Insert currency records to database
+   * @param currencies array with objects with currency name and short name
+   * @returns PrismaPromise<Prisma.BatchPayload>
+   */
+  const createCurrenciesInDatabase = async (
+    currencies: { name: string; shortName: string }[]
+  ) =>
+    prisma.currency.createMany({
+      data: currencies,
+    });
+
+  const currencies = [
+    { name: "Euro", shortName: "EUR" },
+    { name: "Polish złoty", shortName: "PLN" },
+  ];
+  const createManyResult = await createCurrenciesInDatabase(currencies);
+  console.log(`Created ${createManyResult.count} Currencies`);
+};
+
+/**
  * Create initial data in database
  */
 async function main() {
   await createIconInDatabase();
+  await createCurrencyInDatabase();
 }
 
 main()

@@ -1,0 +1,106 @@
+services:
+  application:
+    build:
+      context: ../application
+      dockerfile: application.prod.Dockerfile
+    container_name: countive-docker-application
+    depends_on:
+      - database
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: "1G"
+        reservations:
+          cpus: "0.25"
+          memory: "500M"
+    environment:
+      DATABASE_URI: ${DATABASE_URI}
+      NEXTAUTH_URL: ${NEXTAUTH_URL}
+      NEXTAUTH_URL_INTERNAL: ${NEXTAUTH_URL_INTERNAL}
+      NEXT_AUTH_JS_JWT_SECRET: ${NEXT_AUTH_JS_JWT_SECRET}
+      NEXT_AUTH_JS_SECRET: ${NEXT_AUTH_JS_SECRET}
+      PORT: 3001
+    networks:
+      - countive-docker-network
+    ports:
+      - "3000:3000"
+      - "3001:3001"
+    restart: on-failure:1
+    volumes:
+      - type: volume
+        source: countive-docker-node_modules-volume
+        target: /app/node_modules
+  database:
+    container_name: countive-docker-database
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "1G"
+        reservations:
+          cpus: "0.25"
+          memory: "500M"
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASS}
+      POSTGRES_USER: ${DATABASE_USER}
+    image: "postgres:alpine"
+    networks:
+      - countive-docker-network
+    ports:
+      - "5432:5432"
+    restart: on-failure:1
+    volumes:
+      - type: volume
+        source: countive-docker-postgres_data-volume
+        target: /var/lib/postgres/data
+  migrate:
+    build:
+      context: ../application
+      dockerfile: application.prod.Dockerfile
+    command: ["npx", "prisma", "migrate", "deploy"]
+    container_name: countive-docker-migrate
+    depends_on:
+      - database
+    environment:
+      DATABASE_URI: ${DATABASE_URI}
+    networks:
+      - countive-docker-network
+    profiles:
+      - migrate
+    volumes:
+      - type: bind
+        source: ../application/prisma
+        target: /app/prisma
+      - type: volume
+        source: countive-docker-node_modules-volume
+        target: /app/node_modules
+  seed:
+    build:
+      context: ../application
+      dockerfile: application.prod.Dockerfile
+    command: ["npx", "prisma", "db", "seed"]
+    container_name: countive-docker-seed
+    depends_on:
+      - database
+    environment:
+      DATABASE_URI: ${DATABASE_URI}
+    networks:
+      - countive-docker-network
+    profiles:
+      - seed
+    volumes:
+      - type: bind
+        source: ../application/prisma
+        target: /app/prisma
+      - type: volume
+        source: countive-docker-node_modules-volume
+        target: /app/node_modules
+
+networks:
+  countive-docker-network:
+
+volumes:
+  countive-docker-node_modules-volume:
+  countive-docker-postgres_data-volume:
