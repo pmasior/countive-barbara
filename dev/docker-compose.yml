@@ -58,8 +58,8 @@ services:
     restart: on-failure:1
     volumes:
       - type: volume
-        source: postgres-data_volume
-        target: /var/lib/postgres/data
+        source: postgresql-data_volume
+        target: /var/lib/postgresql/data
   migrate:
     build:
       context: ../application
@@ -127,4 +127,4 @@ networks:
 volumes:
   node-modules_volume:
   next-distribution_volume:
-  postgres-data_volume:
+  postgresql-data_volume:
