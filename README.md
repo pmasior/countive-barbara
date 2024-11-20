@@ -11,6 +11,7 @@ nano .env
 docker compose build
 docker compose run migrate
 docker compose run seed
+# docker compose run seed2 # create example user
 docker compose stop
 docker compose up
 ```
@@ -26,6 +27,7 @@ nano .env
 docker compose build
 docker compose run migrate
 docker compose run seed
+# docker compose run seed2 # create example user
 docker compose stop
 docker compose up
 ```
