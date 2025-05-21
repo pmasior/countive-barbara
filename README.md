@@ -9,8 +9,9 @@ git clone https://github.com/pmasior/countive.git
 cd countive/dev
 nano .env
 docker compose build
-docker compose --profile migrate run migrate
-docker compose --profile seed run seed
+docker compose run migrate
+docker compose run seed
+# docker compose run seed2 # create example user
 docker compose stop
 docker compose up
 ```
@@ -24,8 +25,9 @@ git clone https://github.com/pmasior/countive.git
 cd countive/prod
 nano .env
 docker compose build
-docker compose --profile migrate run migrate
-docker compose --profile seed run seed
+docker compose run migrate
+docker compose run seed
+# docker compose run seed2 # create example user
 docker compose stop
 docker compose up
 ```
